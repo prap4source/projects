@@ -1,20 +1,28 @@
 # project name (generate executable with this name)
-TARGET   = myproject
 
 SRCDIR   = src
 OBJDIR   = obj
 BINDIR   = bin
 INCDIR   = include
+#Based on cc type compile c or c++
+ifeq ($(CC),gcc)
+	TARGET=cproject
+	EXT=c
+	LINKER=gcc
+	CFLAGS=
+	LFLAGS=
+else
+	TARGET=cppproject
+	CC=g++
+	LINKER=g++
+	EXT=cpp
+	CFLAGS=-std=c++11 -Wall -I. -Iinclude/
+	LFLAGS   = -Wall -I. 
+endif
 
-CC       = g++
-LINKER   = g++
-# compiling flags here
-CFLAGS   = -std=c++11 -Wall -I. -Iinclude/
-# linking flags here
-LFLAGS   = -Wall -I. 
-SOURCES  := $(wildcard $(SRCDIR)/*.cpp)
+SOURCES  := $(wildcard $(SRCDIR)/*.$(EXT))
 INCLUDES := $(wildcard $(INCDIR)/*.h)
-OBJECTS  := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.$(EXT)=$(OBJDIR)/%.o)
 rm       = rm -f
 all: $(BINDIR)/$(TARGET)
 $(BINDIR)/$(TARGET): $(OBJECTS)
@@ -22,7 +30,7 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
 	@echo "Linking complete!"
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.$(EXT)
 	@echo $(CC) $(CFLAGS) -c $< -o $@
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
