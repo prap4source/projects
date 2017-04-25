@@ -2,7 +2,8 @@ myproject
 # Compiled Object files
 *.slo
 *.lo
-*.o
+bin/*.o
+obj/*
 *.obj
 
 
