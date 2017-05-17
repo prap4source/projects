@@ -10,7 +10,7 @@
 #else
 #define log(fmt, ...) { }
 #endif
-#define log_err(fmt,...) printf("%s:%d Error"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
+#define log_err(fmt,...) printf("%s:%d Error::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
 #define MAX_HASH 10
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256

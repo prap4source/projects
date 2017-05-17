@@ -14,14 +14,22 @@ stringcase myCases[] = {{"server", start_server},
 		      {"md5csum",start_md5}};
 
 int main(int argc, char *argv[]) {
-	
+	bool not_found = true;
+	int size_cases = (sizeof(myCases)/ sizeof(myCases[0]));
 	if (argc >= 2) {
 	   for (stringcase *pcases = myCases; 
-		pcases != myCases + (sizeof(myCases)/ sizeof(myCases[0])) ; pcases++) {
-			
-		if ((strcmp(argv[1], pcases->str) == 0)) 
+		pcases != myCases +  size_cases ; pcases++) {
+		if ((strcmp(argv[1], pcases->str) == 0)) {
+			not_found = false;
 			(*pcases->func)();
+		}
 	    }
+	}
+	if (not_found) {
+		printf("Usage: %s <",argv[0]);
+		for (int i = 0; i < size_cases; i++)
+			printf("%s/", myCases[i].str);
+		printf(">\n");
 	}
 	return 0;
 }

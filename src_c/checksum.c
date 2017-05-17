@@ -93,7 +93,7 @@ void start_md5()
     output = calc_md5(fileName);
     
     if (output != NULL) {
-	printf("md5sum(%s) len%d\n",output, strlen(output));
+	printf("md5sum(%s) len%ld\n",output, strlen(output));
 	free(output);
     }
     

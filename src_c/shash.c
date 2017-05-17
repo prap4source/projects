@@ -127,7 +127,7 @@ void start_hprogram() {
 	for (int i =0; i< size;i++) {
 		char *p = getHash(myDict[i].k);
 		if (p != NULL)
-			printf("get(%s):'%s' \n", myDict[i], p);
+			printf("get(%s):'%s' \n", myDict[i].k, p);
 	}
 	printHash();
 	hash_fini();
