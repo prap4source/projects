@@ -46,8 +46,9 @@ char *calc_md5(char *fileName) {
 	char cwd[1024];
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	    log ("%s file not found @%s", fileName, cwd);
-	create_file = true;
 	fptr = fopen(fileName, "wb+");
+	if (fptr)
+	    create_file = true;
     }
 
     if(fptr){
@@ -70,9 +71,8 @@ char *calc_md5(char *fileName) {
     }
 
     /* remove file */
-    //if (create_file) 
-    //remove(fileName);
-
+    if (create_file) 
+	remove(fileName);
     
     for(i = 0; i < 16; i++) {
 	//log("%02x ",decrypt[i]);

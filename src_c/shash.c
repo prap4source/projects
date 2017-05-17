@@ -32,12 +32,17 @@ void hash_init(int entries) {
 		log ("table%p already created", projtable);
 		return ;
 	}
+	log("create hash:%d", entries);
 	projtable = calloc(1, sizeof(hashtable));
 	projtable->max_entries = entries;
 	projtable->table = calloc(entries, sizeof(hashentry));
 }
 
 void hash_fini() {
+	if (projtable == NULL) {
+		log ("table not  created");
+		return;
+	}
 	printf ("\n total Entries %d \n",projtable->tot_entries);
 	int i = projtable->max_entries-1;
 	for (; i>=0; i--) {

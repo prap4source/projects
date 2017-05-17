@@ -6,12 +6,13 @@
 #include <unistd.h> 
 #include <arpa/inet.h>
 #include <errno.h>
+#include <signal.h>
 #include "common.h"
 
 #define PORT_TO_USE 20000
 char *hostIP = "127.0.0.1";
+int sfd;
 void server(int sockfd) {
-    
     while (1) {
 	char client_msg[MAX_SOCK_MSG], *serv_msg;
 	memset(client_msg, 0 , MAX_SOCK_MSG);
@@ -32,7 +33,6 @@ void server(int sockfd) {
 	    write(sockfd, client_msg, strlen(client_msg));
 	}
     }
-    
 }
 void getMsg(char *msg, int len) {
     printf("\nREQ:\n");
@@ -54,9 +54,17 @@ void client(int sockfd) {
 	write(STDERR_FILENO, read_msg, strlen(read_msg));
     }
 }
+
+void sr_signal_callback(int signum) {
+    log("Caught signal %d:%s", signum, strsignal(signum));
+    if (close(sfd) < 0) 
+	log_err("failed closing connection:%d",sfd);
+}
+
 void start_server() {
     log("into %s ", __func__);
-    int sfd, reuse = 1;
+    int reuse = 1;
+    signal(SIGINT, sr_signal_callback);
     struct sockaddr_in serv_addr;	
     sfd = socket(PF_INET, SOCK_STREAM, 0);
     if (sfd < 0) {
@@ -81,6 +89,8 @@ void start_server() {
 	    log_err("failed to listen:%d", sfd);
 	    exit(errno);
     }
+    
+    printf ("Waiting for connections.....\n");
     /* Use fork to accept multi client model */
     while (1) {
 	struct sockaddr_in client_addr;
@@ -88,25 +98,29 @@ void start_server() {
 	int lsfd = accept(sfd, (struct sockaddr *)&client_addr, (socklen_t *)&len);
 	if (lsfd <  0) {
 	    log_err("failed to connect ");
-	    continue;
+	    break;
 	}
 	log ("Accepted connection from:%s port%d", 
-		inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
+		inet_ntoa(client_addr.sin_addr), (client_addr.sin_port));
 	pid_t proc = fork();
 	if (proc > 0 ) { /*parent*/
 	    close(lsfd); 
 	} else if (proc ==0) { /* child */
+	    signal(SIGINT, SIG_DFL);
 	    (void)close(sfd); /* This is copy as result of fork */
+	    hash_init(MAX_HASH);
 	    server(lsfd); /* communicate with client */
 	    close(lsfd);
+	    hash_fini();
+	    log ("into child %d",proc);
 	    exit(EXIT_SUCCESS);
 	} else {
 	    log_err("Failed to fork");
 	    exit(errno);
 	}
     }
-    log ("closing connection.....%d\n",sfd);
-    (void)close(sfd);
+    if (close(sfd) < 0) 
+	log_err("failed closing connection:%d",sfd);
 }
 
 void start_client() {
