@@ -3,6 +3,7 @@ myproject
 *.slo
 *.lo
 bin/*.o
+bin/*
 obj/*
 *.obj
 
