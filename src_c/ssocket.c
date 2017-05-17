@@ -23,7 +23,7 @@ void server(int sockfd) {
 	client_msg[strlen(client_msg)-1] = '\0'; 
 	write(STDERR_FILENO, client_msg, strlen(client_msg));
 	serv_msg = calc_md5(client_msg);
-	log ("\n message('%s':'%s') len(%d:%d)",client_msg, serv_msg, 
+	log ("\n message('%s':'%s') len(%ld:%ld)",client_msg, serv_msg, 
 		    strlen(client_msg), strlen(serv_msg));
 	write(sockfd, serv_msg, strlen(serv_msg));
 	free(serv_msg);

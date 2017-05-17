@@ -26,10 +26,24 @@ dict_e myDict[] = {{"zoo","keeper"}, {"play","cricket is life"}, {"oracle","is c
 		   {"amazon","another comp"}};
 
 hashTablep projtable;
+
 void hash_init(int entries) {
+	if (projtable != NULL) {
+		log ("table%p already created", projtable);
+		return ;
+	}
 	projtable = calloc(1, sizeof(hashtable));
+	
 	projtable->max_entries = entries;
 	projtable->table = calloc(entries, sizeof(hashentry));
+#ifdef SHARE_DATA
+	projtable = mmap(NULL, sizeof(hashTablep), PROT_READ | PROT_WRITE, 
+                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+	projtable->table = mmap(NULL, entries*sizeof(hashentry), PROT_READ | PROT_WRITE, 
+                 MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+#endif
+
 }
 
 void hash_fini() {
@@ -70,37 +84,71 @@ int hashCode(char *val) {
 }
 
 char *getHash(char *key) {
+	if (projtable == NULL) {
+		log_err("Table not created yet...");
+		return (char *)'\0';
+	}
+	
 	int hash = hashCode(key);
 	hashEntryp entry = &projtable->table[hash];
-			 
+	log ("entry%p hash%d key%s entries%d",
+			entry, hash, key, projtable->tot_entries);		 
 	while (entry && (entry->value != '\0')) {
 		if (strcmp(entry->key, key) == 0) {
 			log("entry(%s:%s)\n", entry->key, entry->value);
 			return entry->value;
 		}
-	       entry = entry->next;
+		
+	        entry = entry->next;
 	}
 	log ("key%s hash%d not present \n", key, hash);
 	return (char *)'\0';
 }
 	
 void setHash(char *key, char *val) {
+	if (projtable == NULL) {
+		log_err("Table not created yet...");
+		return;	
+	}
 	int hash = hashCode(key);
-	hashEntryp entry = &projtable->table[hash], new_entry;
-	/* already present */
-	if (entry && (entry->value != NULL)) {
-		log("hash(%d,'%s')  present \n",hash, entry->value);
-		while (entry->next) entry = entry->next;
+	hashEntryp entry = &projtable->table[hash], prev;
+	if (entry && (entry->value != '\0')) { 
+		/* Hash already present with different (k,v)*/
+		log("hash(%d,'%s')  present ",hash, entry->value);
+		prev = entry;
+		while (entry) {
+			/* same (k,v) */
+			if (!strcmp(entry->key, key) && !strcmp(entry->value, val)) {
+				log("hash(%s:%s:%d) already present", key, val, hash);
+				return;
+			}
+			prev = entry;
+			entry = entry->next;
+		}
+		entry = prev;
 		entry->next = malloc(sizeof(hashentry));
 		entry = entry->next;
 	}
-				
-	entry->value = malloc(strlen(val) + 1);
-	entry->key = malloc(strlen(key) + 1);
+	entry->value = calloc(1, strlen(val) + 1);
+	entry->key = calloc(1, strlen(key) + 1);
+	
+#ifdef SHARE_DATA 
+	(entry) = mmap(NULL, sizeof(*entry), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+	entry->value = mmap(NULL, (strlen(val) + 1), PROT_READ | PROT_WRITE, 
+                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+	entry->key= mmap(NULL, (strlen(key)+1), PROT_READ | PROT_WRITE, 
+                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+	
+	
+	entry->next = mmap(NULL, sizeof(*entry->next), PROT_READ | PROT_WRITE, 
+                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+#endif
 	strcpy(entry->value, val);
 	strcpy(entry->key, key);
 	entry->next = NULL;
-	log("entry(%d,'%s') key:%s\n",hash, entry->value,key);
+	
+	log("entry(%d,'%s') key:%s %p\n",hash, entry->value,key, entry);
 	projtable->tot_entries++;
 }
 void printHash() {
@@ -110,7 +158,7 @@ void printHash() {
 		printf("\n ===Hash(%d)====\n", i);
 		while (entry) {
 			if (entry->value != NULL)
-				printf (" entry(%s,'%s') " ,entry->key, entry->value);
+				printf (" entry(%s,'%s') ---> " ,entry->key, entry->value);
 			entry = entry->next;
 		}
 		

@@ -75,7 +75,7 @@ char *calc_md5(char *fileName) {
 
     
     for(i = 0; i < 16; i++) {
-	log("%02x ",decrypt[i]);
+	//log("%02x ",decrypt[i]);
 	char *p = &out[i*2];
 	snprintf(p, 16*2, "%02x", (unsigned int)decrypt[i]);
 	if (i == 15)

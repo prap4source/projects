@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <stdbool.h>
+#include <sys/mman.h>
 
 #ifdef DEBUG
 #define log(fmt,...) printf("%s:%d::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
@@ -19,6 +20,12 @@ void start_server();
 void start_client();
 /* Hash start programs */
 void start_hprogram();
+void hash_init();
+void hash_fini();
+char *getHash(char *key);
+void setHash(char *key, char *value);
 /* MD5 csum */
 void start_md5();
 char *calc_md5(char *fileName);
+/* Misc */
+char *check_hash_for_md5(char *key);
