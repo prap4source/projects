@@ -20,3 +20,5 @@ valgrind -v --tool=memcheck --leak-check=yes --leak-check=full --show-leak-kinds
 valgrind -v --tool=memcheck --leak-check=yes bin/cppproject
 on Mac
 make all CC=gcc CFLAGS+="-I/Users/pgopan/anaconda/pkgs/openssl-1.0.2j-0/include"
+To kill application
+kill -9 $(ps -eaf | grep -i "cproject" | grep -v grep | awk '{print $2}')

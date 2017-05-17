@@ -5,6 +5,7 @@
 #include <netinet/ip.h>
 #include <unistd.h> 
 #include <arpa/inet.h>
+#include <errno.h>
 #include "common.h"
 
 #define PORT_TO_USE 20000
@@ -22,11 +23,14 @@ void server(int sockfd) {
 	/* As client sends data with '\0' terminator remove that*/
 	client_msg[strlen(client_msg)-1] = '\0'; 
 	write(STDERR_FILENO, client_msg, strlen(client_msg));
-	serv_msg = calc_md5(client_msg);
-	log ("\n message('%s':'%s') len(%ld:%ld)",client_msg, serv_msg, 
-		    strlen(client_msg), strlen(serv_msg));
-	write(sockfd, serv_msg, strlen(serv_msg));
-	free(serv_msg);
+	serv_msg = check_hash_for_md5(client_msg);
+	if (serv_msg != NULL) {
+	    log ("\n message('%s':'%s') len(%ld:%ld)",client_msg, serv_msg, 
+			strlen(client_msg), strlen(serv_msg));
+	    write(sockfd, serv_msg, strlen(serv_msg));
+	} else { /* return back same message */
+	    write(sockfd, client_msg, strlen(client_msg));
+	}
     }
     
 }
@@ -70,30 +74,38 @@ void start_server() {
     
     if (bind(sfd, (struct sockaddr *)&serv_addr, sizeof(struct sockaddr)) < 0 ) {
 	log_err("failed to bind:%d", sfd);
-	return;
+	exit(errno);
     }
 
     if (listen(sfd, MAX_QUEUE) < 0) {
 	    log_err("failed to listen:%d", sfd);
-	    return;
+	    exit(errno);
     }
     /* Use fork to accept multi client model */
     while (1) {
 	struct sockaddr_in client_addr;
 	int len;
 	int lsfd = accept(sfd, (struct sockaddr *)&client_addr, (socklen_t *)&len);
+	if (lsfd <  0) {
+	    log_err("failed to connect ");
+	    continue;
+	}
+	log ("Accepted connection from:%s port%d", 
+		inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
 	pid_t proc = fork();
-	if (proc > 0 ) {
+	if (proc > 0 ) { /*parent*/
 	    close(lsfd); 
-	} else {
+	} else if (proc ==0) { /* child */
 	    (void)close(sfd); /* This is copy as result of fork */
-	    if (lsfd >= 0) {
-		log ("Accepted connection from:%d", lsfd);
-		server(lsfd);
-		close(lsfd);
-	    }
+	    server(lsfd); /* communicate with client */
+	    close(lsfd);
+	    exit(EXIT_SUCCESS);
+	} else {
+	    log_err("Failed to fork");
+	    exit(errno);
 	}
     }
+    log ("closing connection.....%d\n",sfd);
     (void)close(sfd);
 }
 

@@ -33,17 +33,8 @@ void hash_init(int entries) {
 		return ;
 	}
 	projtable = calloc(1, sizeof(hashtable));
-	
 	projtable->max_entries = entries;
 	projtable->table = calloc(entries, sizeof(hashentry));
-#ifdef SHARE_DATA
-	projtable = mmap(NULL, sizeof(hashTablep), PROT_READ | PROT_WRITE, 
-                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-
-	projtable->table = mmap(NULL, entries*sizeof(hashentry), PROT_READ | PROT_WRITE, 
-                 MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-#endif
-
 }
 
 void hash_fini() {
@@ -131,23 +122,9 @@ void setHash(char *key, char *val) {
 	}
 	entry->value = calloc(1, strlen(val) + 1);
 	entry->key = calloc(1, strlen(key) + 1);
-	
-#ifdef SHARE_DATA 
-	(entry) = mmap(NULL, sizeof(*entry), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-
-	entry->value = mmap(NULL, (strlen(val) + 1), PROT_READ | PROT_WRITE, 
-                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-	entry->key= mmap(NULL, (strlen(key)+1), PROT_READ | PROT_WRITE, 
-                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-	
-	
-	entry->next = mmap(NULL, sizeof(*entry->next), PROT_READ | PROT_WRITE, 
-                    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-#endif
 	strcpy(entry->value, val);
 	strcpy(entry->key, key);
 	entry->next = NULL;
-	
 	log("entry(%d,'%s') key:%s %p\n",hash, entry->value,key, entry);
 	projtable->tot_entries++;
 }
