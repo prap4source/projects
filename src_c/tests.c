@@ -36,6 +36,11 @@ void printDuplicates(int *arr, int len) {
 	}
 	free(bitmask);
 }
+/* https://www.careercup.com/question?id=14424684 */
+char *read4k(char *buf, int num) {
+
+	return NULL;
+}
 
 void start_test(int argc, char *argv[]) {
 	int a[] = {1,4,2,1,0,pow(2,31)-1,0,pow(2,31)-1};
