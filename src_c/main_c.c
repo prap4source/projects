@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "common.h"
 /* fptr is function pointer which takes void and returns void */
-typedef void (*fptr)(void);
+typedef void (*fptr)(int argc, char *argv[]);
 typedef struct scase {
 	char *str;
 	fptr func;
@@ -11,7 +11,8 @@ typedef struct scase {
 stringcase myCases[] = {{"server", start_server},
 		      {"client", start_client}, 
 		      {"hash", start_hprogram},
-		      {"md5csum",start_md5}};
+		      {"md5csum",start_md5},
+		      {"tests",start_test}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;
@@ -21,7 +22,7 @@ int main(int argc, char *argv[]) {
 		pcases != myCases +  size_cases ; pcases++) {
 		if ((strcmp(argv[1], pcases->str) == 0)) {
 			not_found = false;
-			(*pcases->func)();
+			(*pcases->func)(argc, argv);
 		}
 	    }
 	}

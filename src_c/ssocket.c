@@ -61,7 +61,7 @@ void sr_signal_callback(int signum) {
 	log_err("failed closing connection:%d",sfd);
 }
 
-void start_server() {
+void start_server(int argc, char *argv[]) {
     log("into %s ", __func__);
     int reuse = 1;
     signal(SIGINT, sr_signal_callback);
@@ -123,7 +123,7 @@ void start_server() {
 	log_err("failed closing connection:%d",sfd);
 }
 
-void start_client() {
+void start_client(int argc, char *argv[]) {
     int cfd;
     struct sockaddr_in serv_addr;	
     cfd = socket(PF_INET, SOCK_STREAM, 0);

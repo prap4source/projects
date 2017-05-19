@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <stdbool.h>
 #include <sys/mman.h>
+#include <math.h>
 
 #ifdef DEBUG
 #define log(fmt,...) printf("%s:%d::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
@@ -16,10 +17,10 @@
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256
 /* Socket API's */
-void start_server();
-void start_client();
+void start_server(int argc, char *argv[]);
+void start_client(int argc, char *argv[]);
 /* Hash start programs */
-void start_hprogram();
+void start_hprogram(int argc, char *argv[]);
 void hash_init();
 void hash_fini();
 char *getHash(char *key);
@@ -29,3 +30,5 @@ void start_md5();
 char *calc_md5(char *fileName);
 /* Misc */
 char *check_hash_for_md5(char *key);
+/* Run tests */
+void start_test(int argc, char *argv[]);

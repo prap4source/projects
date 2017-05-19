@@ -147,7 +147,7 @@ void printHash() {
 	}
 }
 
-void start_hprogram() {
+void start_hprogram(int argc, char *argv[]) {
 	int i =0, size;
 	hash_init(MAX_HASH);
 	size = sizeof(myDict)/sizeof(myDict[0]);
