@@ -227,6 +227,31 @@ int strStr(string haystack, string needle) {
         return -1;
 }
 
+string multiplyStrings(string num1, string num2) 
+{
+    int len1 = num1.length();
+    int len2 = num2.length();
+    string sum(len1+len2, '0');
+
+    for(int i = len1-1; i >=0; i--) {
+        int carry = 0;
+        for(int j = len2-1; j >= 0; j--) {
+            int tmp = (sum[i+j+1] - '0')
+                    + (num1[i]-'0') * (num2[j]-'0')
+                    + carry;
+            sum[i+j+1] = (tmp % 10) + '0';
+            carry = tmp/10;
+        }
+        sum[i] += carry;
+    }
+
+    size_t pos = sum.find_first_not_of('0');
+    if(pos != string::npos) {
+        return sum.substr(pos);
+    }
+    return "0";
+}
+
 void start_stests(int argc, char *argv[]) {
     S res;
     string s1 = "aabbcccdddeeffggggg";
@@ -256,6 +281,8 @@ void start_stests(int argc, char *argv[]) {
     }
     string s8= "pradeepgopanapalli";
     cout << "Largest subsequence " << res.findLargeSS(s8)<<"\n";
+    
+    string s9 ="123";
+    string s10 = "200";
+    cout <<"multiply strings "<<multiplyStrings(s9,s10) <<"\n";
 }
-
-
