@@ -17,7 +17,8 @@ else
 	CC=g++
 	LINKER=g++
 	EXT=cpp
-	override CFLAGS+=-std=c++1y -I.
+	#override CFLAGS+=-std=c++14 -I.
+	override CFLAGS+=--std=c++1y -I.
 	override LFLAGS+= -Wall -I. 
 endif
 

@@ -57,7 +57,7 @@ class HashTable {
     HashTable(int m) {
 	    max_size = m;
 	    table = new HashEntry * [max_size];
-	    log_info ("size %d\n", sizeof(HashEntry*[max_size]));
+	    log ("size %d\n", sizeof(HashEntry*[max_size]));
 	    for (int i = 0;i <max_size; i++)
 		    table[i] = NULL;
     }
@@ -79,12 +79,12 @@ class HashTable {
 
 	    while (entry) {
 			if (entry->getKey() == key) {
-				log_info ("'%s': get(%d) hash:%d present\n", entry->getValue(), key, hash);
+				log ("'%s': get(%d) hash:%d present\n", entry->getValue().c_str(), key, hash);
 				return entry->getValue();
 			}
 			entry = entry->getNext();		
 	    }
-	    log_info ("get(%d) hash:%d not present\n",key, hash);
+	    log ("get(%d) hash:%d not present\n",key, hash);
 	    return "";
     }
     void set(int key, string value) {
@@ -93,7 +93,7 @@ class HashTable {
 	    HashEntry *entry = table[hash];
 	    /* If entry is already used then chain it */
 	    if (entry != NULL) {
-			log_info ("set(%d:'%s') %d:hash already in use \n",
+			log ("set(%d:'%s') %d:hash already in use \n",
 				key, value.c_str(), hash);
 			while (entry->getNext()) entry = entry->getNext();
 			entry->setNext(newentry);
@@ -101,7 +101,7 @@ class HashTable {
 			table[hash] = newentry;
 	    }
 	    
-	    log_info ("set(%d,'%s') hash:%d done  \n",key, value.c_str(), hash);
+	    log ("set(%d,'%s') hash:%d done  \n",key, value.c_str(), hash);
     }
 };
 		
