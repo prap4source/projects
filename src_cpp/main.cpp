@@ -13,7 +13,8 @@ typedef struct scase {
 /* Dictonary of string to function pointers */
 stringcase myCases[] = {{"hash", start_hash},
 		        {"string", start_stests},
-			{"puzzles", start_puzzles}};
+			{"puzzles", start_puzzles},	
+			{"singlelist", start_slist}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;

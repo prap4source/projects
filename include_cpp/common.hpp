@@ -7,6 +7,7 @@
 #include <stack>
 #include <algorithm> 
 #include <unordered_map>
+#include <limits.h>
 
 #ifdef DEBUG
 #define log(fmt,...) printf ("%s:%d::::" fmt "\n",__func__,__LINE__,## __VA_ARGS__)
@@ -21,3 +22,4 @@
 void start_hash(int argc, char *argv[]);
 void start_stests(int argc, char *argv[]);
 void start_puzzles(int argc, char *argv[]);
+void start_slist(int argc, char *argv[]);

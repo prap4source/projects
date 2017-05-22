@@ -280,9 +280,10 @@ void start_stests(int argc, char *argv[]) {
         cout <<s4 <<" [converttoCurrency] "<< res.convertTocurrency(s4) <<"\n";
     }
     string s8= "pradeepgopanapalli";
-    cout << "Largest subsequence " << res.findLargeSS(s8)<<"\n";
+    printf("Largestsubsequence(%s) ==> (%d) \n",s8.c_str(), res.findLargeSS(s8));
+    
     
     string s9 ="123";
     string s10 = "200";
-    cout <<"multiply strings "<<multiplyStrings(s9,s10) <<"\n";
+    printf("multiply(%s,%s) ==> (%s)\n",s9.c_str(), s10.c_str(), multiplyStrings(s9,s10).c_str());
 }
