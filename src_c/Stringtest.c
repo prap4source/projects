@@ -68,3 +68,38 @@ int compareVersion(char* version1, char* version2) {
     
     return 0;
 }
+/* atoi function convert string to integer 
+ https://leetcode.com/problems/string-to-integer-atoi/#/description
+ */
+int myAtoi(char* str) {
+    if (str == NULL)
+        return 0;
+    long long int i =0, len = strlen(str);
+    int sign = 1, sum =0;
+    
+    while (str[i] != '\0' && str[i] == ' ')
+            i++;
+    if (str[i] != '\0') {
+        if (str[i] ==  '+') {
+            sign = 1;
+            i++;
+        } else if (str[i] == '-')  {
+            sign = -1;
+            i++;
+        }
+        while ((str[i] != '\0') && isdigit(str[i])) {
+            int n = sum;
+            sum = (sum * 10) + (str[i] - '0');
+            if (sum/10 != n) {/* number too large or small */
+                if (sign < 0)
+                    return INT_MIN;
+                else
+                    return INT_MAX;
+            }
+            log ("sum(%d) %d \n",sum, str[i]);
+            i++;
+        }
+    
+    }
+    return (sign * sum);
+}

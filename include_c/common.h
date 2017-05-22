@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <sys/mman.h>
 #include <math.h>
+#include <limits.h>
+#include <ctype.h>
 
 #ifdef DEBUG
 #define log(fmt,...) printf("%s:%d::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
@@ -32,5 +34,7 @@ char *calc_md5(char *fileName);
 char *check_hash_for_md5(char *key);
 /* Run tests */
 void start_test(int argc, char *argv[]);
+
 char *multiplyStrings(char *n1, char *n2);
 int compareVersion(char *v1, char *v2);
+int myAtoi(char *str);
