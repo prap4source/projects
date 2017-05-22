@@ -32,3 +32,4 @@ char *calc_md5(char *fileName);
 char *check_hash_for_md5(char *key);
 /* Run tests */
 void start_test(int argc, char *argv[]);
+char *multiplyStrings(char *n1, char *n2);

@@ -12,7 +12,6 @@
 int findMaxinArray(int *arr, int len) {
 	int max_no = arr[0], i;
 	for (i=1; i < len ;i++) {
-		log(" (%d:'%d')",i, arr[i]);
 		max_no = max(max_no, arr[i]);
 	}
 	return max_no;
@@ -45,6 +44,16 @@ char *read4k(char *buf, int num) {
 void start_test(int argc, char *argv[]) {
 	int a[] = {1,4,2,1,0,pow(2,31)-1,0,pow(2,31)-1};
 	printDuplicates(a, sizeof(a)/sizeof(a[0]));
+	log ("num of arguments %d \n",argc);
+
+	if (argc >= 4) {
+		char *result = multiplyStrings(argv[2], argv[3]);
+		log ("(%s:%s)", argv[2], argv[3]);
+		if (result) {
+			printf("mulitply(%s:%s) is %s \n", argv[2], argv[3], result);
+			free(result);
+		}
+	}
 }
 	
 
