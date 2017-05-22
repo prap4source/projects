@@ -1,20 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include "hash.hpp"
+#include "common.hpp"
 using namespace std;
-
-/* fptr is function pointer which takes void and returns void */
-typedef void (*fptr)(int argc, char *argv[]);
-typedef struct scase {
-	const char *str;
-	fptr func;
-}stringcase;
-/* Dictonary of string to function pointers */
-stringcase myCases[] = {{"hash", start_hash},
-		        {"string", start_stests},
-			{"puzzles", start_puzzles},	
-			{"singlelist", start_slist}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;
@@ -22,8 +10,9 @@ int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 	   for (stringcase *pcases = myCases; 
 		pcases != myCases +  size_cases ; pcases++) {
-		if ((strcmp(argv[1], pcases->str) == 0)) {
+		if (!strcmp(argv[1],"all") || (strcmp(argv[1], pcases->str) == 0)) {
 			not_found = false;
+			printf("\n starting %s \n", pcases->str);
 			(*pcases->func)(argc, argv);
 		}
 	    }
