@@ -42,19 +42,21 @@ char *read4k(char *buf, int num) {
 }
 
 void start_test(int argc, char *argv[]) {
-	int a[] = {1,4,2,1,0,pow(2,31)-1,0,pow(2,31)-1};
-	printDuplicates(a, sizeof(a)/sizeof(a[0]));
 	log ("num of arguments %d \n",argc);
-
-	if (argc >= 4) {
-		char *result = multiplyStrings(argv[2], argv[3]);
-		log ("(%s:%s)", argv[2], argv[3]);
-		if (result) {
-			printf("mulitply(%s:%s) is %s \n", argv[2], argv[3], result);
-			free(result);
+	if (argc >= 5) {
+		if (strcmp(argv[2],"multiply") == 0) {
+			char *result = multiplyStrings(argv[3], argv[4]);
+			log ("(%s:%s)", argv[2], argv[3]);
+			if (result) {
+				printf("mulitply(%s:%s) is %s \n", argv[3], argv[4], result);
+				free(result);
+			}
+		} else if (strcmp(argv[2], "compvers") == 0) {
+			int result = compareVersion(argv[3], argv[4]);
+			printf("compare(%s:%s) result%d\n", argv[3], argv[4], result);
 		}
+	} else {
+		int a[] = {1,4,2,1,0,pow(2,31)-1,0,pow(2,31)-1};
+		printDuplicates(a, sizeof(a)/sizeof(a[0]));
 	}
 }
-	
-
-
