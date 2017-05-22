@@ -38,3 +38,6 @@ void start_test(int argc, char *argv[]);
 char *multiplyStrings(char *n1, char *n2);
 int compareVersion(char *v1, char *v2);
 int myAtoi(char *str);
+
+void printDuplicates(int *arr, int len);
+int findMinSlideSize(int arr[], int m, int swSize);

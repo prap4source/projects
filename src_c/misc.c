@@ -17,3 +17,35 @@ char *check_hash_for_md5(char *key) {
      }
      return (char *)NULL;
 }
+
+/* 
+llist of integer (unsorted)
+bool lookup(int key)
+void delete(int key)
+highly concurrent of lookup/delete, lookup/lookup, delete/delete
+
+lookup - 0(1)
+use hash
+typedef struct hashEntry {
+  int key;
+  int *location;
+  struct hashEntry *next;
+} *hashEP;
+hashEP table[MAX];
+bool lookup (int key) {
+  hashEP temp= table[key%MAX];
+   if (temp != NULL) {
+    unlock();
+    return true;
+  } else {
+    unlock();
+    return false; 
+  }
+}
+
+||HEAD1||->>>>>>>>>>>>>>>>>>>>(key10)
+||HEAD2||->>>>>>>>>>>>>>>>>>>>(key11)
+
+void delete(int key) {
+  
+}*/
