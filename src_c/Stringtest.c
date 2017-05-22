@@ -2,6 +2,7 @@
  * Stringtest.c
  */
 #include "common.h"
+/* Multiply integers represented as strings */
 char *multiplyStrings(char *num1, char *num2) {
 	char *num3;
     if (!num1 || !num2) {
@@ -46,7 +47,7 @@ int compareVersion(char* version1, char* version2) {
     int l1 = strlen(version1);
     int l2 = strlen(version2);
     int i =0 , j=0;
-    while ( (i < l1) || (j<l2)) {
+    while ((i < l1) || (j<l2)) {
         long long int num1=0, num2=0;
         while ((i<l1)&& version1[i] != '.') {
             num1 += num1*10 + (version1[i] - '0');
