@@ -7,6 +7,17 @@ bin/*
 obj/*
 *.obj
 
+#ignore kernel modules
+kernelspace/.ctf/
+kernelspace/modproj.ko
+kernelspace/modproj.mod.o
+kernelspace/*.o
+kernelspace/modproj.sdtstub.o
+kernelspace/main.o
+kernelspace/.*
+kernelspace/modproj.*
+kernelspace/Module.symvers
+kernelspace/modules.order
 
 # Precompiled Headers
 *.gch
