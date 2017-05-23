@@ -19,13 +19,10 @@ char *check_hash_for_md5(char *key) {
 }
 
 /* 
-llist of integer (unsorted)
-bool lookup(int key)
-void delete(int key)
-highly concurrent of lookup/delete, lookup/lookup, delete/delete
-
-lookup - 0(1)
-use hash
+ (TBD)(INT_QUEST) design a system which is highly concurrent to lookup/delete, lookup/lookup, delete/delete
+ * list of integer (unsorted)
+ * bool lookup(int key) , void delete(int key)
+My Solution:
 typedef struct hashEntry {
   int key;
   int *location;
@@ -42,10 +39,24 @@ bool lookup (int key) {
     return false; 
   }
 }
-
 ||HEAD1||->>>>>>>>>>>>>>>>>>>>(key10)
 ||HEAD2||->>>>>>>>>>>>>>>>>>>>(key11)
+void delete(int key) {}
+*/
 
-void delete(int key) {
-  
-}*/
+/* (TBD)(INT_QUEST)  Design a polling function to check a adress (some address 0x12345) for a particular bit
+ * My solution
+ * int my_poll(void *p) {
+ *    nv_priv *priv = (nv_priv)p;
+ *    while (!test_bit(NV_IN_PROCESS, &priv->flag)) {
+ * 	//wait
+ * 	//yeild
+ *   }
+ *   return SUCCESS;
+ * }
+ * bool test_bit(int bit, int flag) {
+ * 	if ((flag & (1<<bit))
+ * 		return true;
+ * 	return false;
+ * }
+ */

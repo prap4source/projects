@@ -84,7 +84,7 @@ char *calc_md5(char *fileName) {
     return out;
 }
 
-void start_md5()
+void start_md5(int argc, char *argv[])
 {
     char fileName[] = {'\0'};
     char *output = (char *) malloc(64);

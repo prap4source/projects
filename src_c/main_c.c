@@ -12,7 +12,8 @@ stringcase myCases[] = {{"server", start_server},
 		      {"client", start_client}, 
 		      {"hash", start_hprogram},
 		      {"md5csum",start_md5},
-		      {"tests",start_test}};
+		      {"tests",start_test},
+		      {"bittests",start_bittests}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;
