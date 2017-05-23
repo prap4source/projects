@@ -2,6 +2,7 @@ KDIR := /lib/modules/`uname -r`/build
 PWD := $(shell pwd)
 obj-m := modproj.o
 modproj-objs := main.o
+ccflags-y += -DDEBUG
 all:
 	make -C $(KDIR) M=$(PWD) modules
 clean:
