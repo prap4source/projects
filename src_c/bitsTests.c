@@ -82,9 +82,7 @@ int getSum(int a, int b) {
 
 /* The Hamming distance between two integers is the number of positions at which 
 the corresponding bits are different.Given two integers x and y, calculate the Hamming distance.
-Example:
-Input: x = 1, y = 4
-Output: 2
+Example: Input: x = 1, y = 4 Output: 2
 Explanation:
 1   (0 0 0 1)
 4   (0 1 0 0)
@@ -173,6 +171,15 @@ int findComplement(int num) {
             return 1;
         while (num & mask) mask <<=1;
         return (~num & ~mask);
+}
+#define BITS_PER_LONG 64
+#define BIT_MASK(nr) (1UL << (nr % BITS_PER_LONG)) 
+#define BIT_WORD(nr) (nr / BITS_PER_LONG)
+/* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 */
+int test_bit(int flag, uint64_t *addr) {
+    
+    return 1UL << (addr[BIT_WORD(flag)] >> (flag & (BITS_PER_LONG -1)));
+    
 }
 #if 0
 void misc_bits() {
