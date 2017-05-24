@@ -177,8 +177,8 @@ int findComplement(int num) {
 #define BIT_WORD(nr) (nr / BITS_PER_LONG)
 /* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 */
 int test_bit(int flag, uint64_t *addr) {
-    
-    return 1UL << (addr[BIT_WORD(flag)] >> (flag & (BITS_PER_LONG -1)));
+
+    return 1UL & (addr[BIT_WORD(flag)] >> (flag & (BITS_PER_LONG -1)));
     
 }
 #if 0
