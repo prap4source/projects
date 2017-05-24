@@ -1,6 +1,13 @@
 #include "common.h"
 #include "operations.h"
-typedef int EType;
+#include "bitsops.h"
+/* fptr is function pointer */
+typedef int (*fptr) (int);
+typedef struct strfunc {
+    char *str;
+    fptr func;
+}sfunc;
+		    
 /* (INT_QUEST)Set bits between two indexes You are given two 32-bit numbers, N and M, and two bit positions, i and j 
  *  Write a method to set all bits between i and j in N equal to M (e g , M becomes a substring of N located at i and starting at j)   
     EX:N = 10000000000, M = 10101, i = 2, j = 6 Output: N = 10001010100
@@ -54,7 +61,7 @@ int set_bit_l_to_r(int x, int y, int l , int r) {
    in a given integer.
    http://www.geeksforgeeks.org/count-set-bits-in-an-integer/
 */
-EType countbits(EType n) {
+int countbits(int n) {
     int count = 0;
     while (n) {
         n &= (n-1);
@@ -63,8 +70,8 @@ EType countbits(EType n) {
     return count;
 }
 /* Brute Force way */
-EType countbits1(EType n) {
-    EType count = 0;
+int countbits1(int n) {
+    int count = 0;
     while (n) {
         count += (n &0x1);
         n >>= 1;
@@ -92,8 +99,8 @@ Explanation:
 The above arrows point to positions where the corresponding bits are different. 
 https://leetcode.com/problems/hamming-distance/
 */
-EType FindHammingDistance(EType x, EType y) {
-        EType z = x^y;
+int FindHammingDistance(int x, int y) {
+        int z = x^y;
         return (countbits(z));
 }
 
@@ -155,16 +162,15 @@ int reverseBitsmton(int num, int m ,int n){
 }
 /* Given a number 11 (1011) reverse bits 1101 
 https://discuss.leetcode.com/topic/9863/my-3ms-pure-c-solution */
-uint32_t reverseBits(uint32_t n) {
-        uint32_t m = 0;
-        for (uint32_t i =0 ;i <32;i++,n>>=1) {
+int reverseBits(int n) {
+        int m = 0;
+        for (int i =0 ;i <32;i++,n>>=1) {
             m <<= 1;
             /* Like a circle */
             m = m | (n&0x1);
         }
         return m;
 }
-
 /* Given a number 101 -> find complement 010 without trailing zeros
 https://leetcode.com/submissions/detail/94678943  */
 int findComplement(int num) {
@@ -174,39 +180,50 @@ int findComplement(int num) {
         while (num & mask) mask <<=1;
         return (~num & ~mask);
 }
-#define BITS_PER_LONG 64
-#define BIT_MASK(nr) (1UL << (nr % BITS_PER_LONG)) 
-#define BIT_WORD(nr) (nr / BITS_PER_LONG)
-/* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 */
-int test_bit(int flag, uint64_t *addr) {
 
-    return 1UL & (addr[BIT_WORD(flag)] >> (flag & (BITS_PER_LONG -1)));
-    
+char *convertTobits(int num) {
+    int size = sizeof(num)* 8, i;
+    char *str = malloc(size + 1); /*33 bits */
+    for (i = 0; i < size; i ++) {
+	int bitmask = 1U << (((size-1)-i) % BITS_PER_INT);
+	if (num & bitmask)
+	    str[i] = '1';
+	else 
+	    str[i] = '0';
+    }
+    str[size] = '\0';
+
+    return str;
 }
-#if 0
-void misc_bits() {
-    uint32_t num;
-    int position = 1,v;
-    num = num | (1 << position);/* Program to set a particular bit in an integer */
-    num = num & ~(1 << position); /* Program to clear a particular bit in an integer */
-    num = num ^ (1 << position); /* Program to toggle a particular bit */
-    if (num & (1 << position) == 1) /* Program to check whether a bit is set or not */
-    if (num & (1 << position) != 1) /* Program to check whether a bit is clear or not */
-    if (num & (num - 1) == 0) /* Program to check whether a number is power of 2 or not */
-    num= (num << 3) - num; /* Program to multiply a number by 7 without using a multiply */
-    v && !(v & (v - 1)); /* Note that 0 is incorrectly considered a power of 2 here */
-}
-#endif
+
+sfunc bitTable[] = {{"findblocks", findBlocksofone},
+		    {"reversebits", reverseBits},
+		    {"countbits", countbits1}};
+
 void start_bittests(int argc, char *argv[]) {
+    bool not_found = true;
+    int sizes = sizeof(bitTable)/sizeof(bitTable[0]);
     if (argc == 4) {
 	int num = myAtoi(argv[3]);
-	if (strcmp(argv[2],"findblocks") == 0) 
-	    printf("%s(%d):%d \n", argv[2], num, findBlocksofone(num));
-	else if (strcmp(argv[2], "reverseBits") == 0) 
-	    printf("%s(%d):%d \n", argv[2], num, reverseBits(num));
-    } else {
-	    int n = 0x99;
-	    printf ("countbits(%x): %x \n", n, countbits1(n));
+	char *p = convertTobits(num);
+	sfunc *tempTable;
+	for (tempTable = bitTable; tempTable != bitTable + sizes; tempTable++) {
+	    if (!strcmp("all", argv[2]) || !strcmp(tempTable->str, argv[2])) {
+		int n = tempTable->func(num);
+		char *p1 = convertTobits(n);
+		printf("%s(%s) input(%d:%s)::output(%d:%s) \n", tempTable->str, argv[3], num, p, n, p1);
+		not_found = false;
+		free(p1);
+	    }
+	}
+	free (p);
+    } 
+    if (not_found) {
+	    printf ("Usage %s <%s> <",argv[0], argv[1]);
+	    for (int i = 0; i < sizes; i++) 
+		    printf("%s|", bitTable[i].str);
+	    printf("> <val>\n");
     }
+
 }
 

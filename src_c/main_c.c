@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	if (argc >= 2) {
 	   for (stringcase *pcases = myCases; 
 		pcases != myCases +  size_cases ; pcases++) {
-		if ((strcmp(argv[1], pcases->str) == 0)) {
+		if (!strcmp(argv[1], pcases->str)) {
 			not_found = false;
 			(*pcases->func)(argc, argv);
 		}

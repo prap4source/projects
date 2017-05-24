@@ -96,7 +96,7 @@ int myAtoi(char* str) {
                 else
                     return INT_MAX;
             }
-            log ("sum(%d) %d \n",sum, str[i]);
+            //log ("sum(%d) %d \n",sum, str[i]);
             i++;
         }
     
