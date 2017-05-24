@@ -16,9 +16,10 @@ int updateBits(int N, int M, int i, int j) {
   	// Clear i through j, then put m in there
   	return (N & mask) | (M << i);
   }
-/* (INT_QUEST) find blocks of 1 in a number
+/* 
+ * (INT_QUEST) find blocks of 1 in a number
  * Eg: 11001110101111 returns 4 as there are 4 blocks
- */ 
+ */
 int findBlocksofone(int num) {
     int blocks =0 , bits =0;
     while (num) {
@@ -26,6 +27,7 @@ int findBlocksofone(int num) {
 	    if (bits) blocks++;
 	    bits = 0;
 	} else bits ++;
+	num = num >> 1;
     }
     /* For MSB block */
     if (bits) blocks ++;
@@ -69,7 +71,8 @@ EType countbits1(EType n) {
     }
     return count;
 }
-/* get sum of a & b with +/- */
+
+/* get sum of a & b without +/- */
 int getSum(int a, int b) {
         while (b) {
             int temp = a;
@@ -78,7 +81,6 @@ int getSum(int a, int b) {
         }
         return a;
 }
-
 
 /* The Hamming distance between two integers is the number of positions at which 
 the corresponding bits are different.Given two integers x and y, calculate the Hamming distance.
@@ -189,11 +191,12 @@ void misc_bits() {
 }
 #endif
 void start_bittests(int argc, char *argv[]) {
-    log ("num of arguments %d \n",argc);
     if (argc == 4) {
-	if (strcmp(argv[2],"multiply") == 0) {
-	} else if (strcmp(argv[2], "compvers") == 0) {
-	}
+	int num = myAtoi(argv[3]);
+	if (strcmp(argv[2],"findblocks") == 0) 
+	    printf("%s(%d):%d \n", argv[2], num, findBlocksofone(num));
+	else if (strcmp(argv[2], "reverseBits") == 0) 
+	    printf("%s(%d):%d \n", argv[2], num, reverseBits(num));
     } else {
 	    int n = 0x99;
 	    printf ("countbits(%x): %x \n", n, countbits1(n));
