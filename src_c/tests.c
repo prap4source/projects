@@ -28,15 +28,26 @@ void start_test(int argc, char *argv[]) {
 	       if (strcmp(argv[2], "atoi") == 0) {
 		       int result = myAtoi(argv[3]);
 		       printf ("atoi(%s) == %d \n", argv[3], result);
-	       }
+	       } else if (strcmp(argv[2], "array") == 0) {
+			int a[] = {1, 0, -1, 2, 1, 3, -2, -3, 0};
+			int m = sizeof(a)/sizeof(a[0]);
+			printDuplicates(a, m);
+			printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
+	      }
 	} else {
-		int a[] = {1, 0, -1, 2, 1, 3, -2, -3, 0};
-		int m = sizeof(a)/sizeof(a[0]);
-		printDuplicates(a, m);
-		printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
-		int *addr =  malloc(5*sizeof(int));
-		set_bit(35, addr);
-		free(addr);
+		
+		for (int i =1; i<=4;i++) {
+			/* In a system with 4 GB RAM we can allocate upto 2^32 virtual memory
+			 * in 8 GB upto 2^33 and so on */			
+			uint64_t alloc_mem = pow(2,32);
+			uint64_t *addr =  malloc(alloc_mem);
+			printf("(%lp:%Ld) mem alloc\n", addr, alloc_mem);
+			set_bit(35, addr);
+			free(addr);
+			
+		}
+		
+		
 	}
 }
 

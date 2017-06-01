@@ -24,3 +24,8 @@ To kill application
 kill -9 $(ps -eaf | grep -i "cproject" | grep -v grep | awk '{print $2}')
 For building kernel module
 make clean;make all;
+objdump
+objdump -Swx --line-numbers <object>
+Use following to debug malloc/free of a process
+gdb -x gdb_script -p <pid>
+
