@@ -1,5 +1,6 @@
 /* Some coding challenges asked in interviews */
 #include "common.h"
+#include "bitsops.h"
 #include <stdlib.h>
 
 
@@ -33,5 +34,9 @@ void start_test(int argc, char *argv[]) {
 		int m = sizeof(a)/sizeof(a[0]);
 		printDuplicates(a, m);
 		printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
+		int *addr =  malloc(5*sizeof(int));
+		set_bit(35, addr);
+		free(addr);
 	}
 }
+

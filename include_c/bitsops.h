@@ -1,5 +1,7 @@
 /* Operations on bits */
-#include "common.h"
+#ifdef set_bit
+#undef set_bit
+#undef test_bit
 #define BITS_PER_LONG 64
 #define BITS_PER_INT 32
 #define BIT_MASK_L(nr) (1UL << (nr % BITS_PER_LONG)) 
@@ -26,3 +28,11 @@ static int test_bit(int flag, uint64_t *addr) {
     
 }
 
+static int set_bit(int nr, uint64_t *addr) {
+    uint64_t *p = ((uint64_t *)addr + (nr / BITS_PER_LONG));
+    printf("(%d:%d:%d) \n",nr, (nr >> 5), 1<< (nr&31)); /* o/p == (35:1:3) */
+    printf("(%x:%x) \n",addr, p);
+    return 0;
+
+}
+#endif

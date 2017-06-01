@@ -22,3 +22,5 @@ on Mac
 make all CC=gcc CFLAGS+="-I/Users/pgopan/anaconda/pkgs/openssl-1.0.2j-0/include"
 To kill application
 kill -9 $(ps -eaf | grep -i "cproject" | grep -v grep | awk '{print $2}')
+For building kernel module
+make clean;make all;
