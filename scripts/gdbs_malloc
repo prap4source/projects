@@ -12,10 +12,3 @@ commands
   end
   cont
 end
-break free
-commands
-  silent
-  bt 1
-  cont
-end
-cont

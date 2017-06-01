@@ -1,0 +1,7 @@
+break free
+commands
+  silent
+  bt 1
+  print $rax
+  cont
+end
