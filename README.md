@@ -27,5 +27,4 @@ make clean;make all;
 objdump
 objdump -Swx --line-numbers <object>
 Use following to debug malloc/free of a process
-gdb -x gdb_script -p <pid>
-
+gdb -x gdbs_free -p <pid>

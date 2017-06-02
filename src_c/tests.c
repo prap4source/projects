@@ -35,7 +35,6 @@ void start_test(int argc, char *argv[]) {
 			printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
 	      }
 	} else {
-		
 		for (int i =1; i<=4;i++) {
 			/* In a system with 4 GB RAM we can allocate upto 2^32 virtual memory
 			 * in 8 GB upto 2^33 and so on */			

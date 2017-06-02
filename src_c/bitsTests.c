@@ -41,6 +41,19 @@ int findBlocksofone(int num) {
     return blocks;
 }
 
+int modifybits(int num) {
+    int flag;
+    int *addr = calloc(1, 4 * sizeof(int));
+    int ret =0;
+    printf("Enter bit to set ?\n");
+    scanf("%d", &flag);
+    *addr = num;
+    set_bit(flag, addr);
+    printf("setbit(%d:%p) num(%d:%d)\n",flag, addr, num ,*addr);
+    ret = *addr;
+    free(addr);
+    return (ret);
+}
 /* set l to r bits in y ,if they are set in x
  * int n =  set_bit_l_to_r(25,32,4,3); -> return 48
  */
@@ -198,7 +211,8 @@ char *convertTobits(int num) {
 
 sfunc bitTable[] = {{"findblocks", findBlocksofone},
 		    {"reversebits", reverseBits},
-		    {"countbits", countbits1}};
+		    {"countbits", countbits1},
+		    {"modbits", modifybits}};
 
 void start_bittests(int argc, char *argv[]) {
     bool not_found = true;

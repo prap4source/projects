@@ -2,6 +2,9 @@
 #ifdef __KERNEL__
 #undef set_bit
 #undef test_bit
+#else 
+#define  raw_local_irq_save(x) 
+#define  raw_local_irq_restore(x)
 #endif
 #define set_bit my_set_bit
 #define test_bit my_test_bit
@@ -25,13 +28,22 @@ static inline int misc_bits(int num, int position) {
     return 0;
 }
 /* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 */
-static inline int test_bit(int flag, uint64_t *addr) {
-    return 1UL & (addr[BIT_WORD_L(flag)] >> (flag & (BITS_PER_LONG -1)));
+static inline int test_bit(int nr, unsigned long *addr) {
+    unsigned long *p = ((unsigned long *)addr + (nr / BITS_PER_LONG));
+    unsigned long bitmask = 1 << (nr % BITS_PER_LONG);
+    unsigned long res = *p;
+    
+    return (res & bitmask) != 0;
     
 }
 
-static inline int my_set_bit(int nr, uint64_t *addr) {
-    //uint64_t *p = ((uint64_t *)addr + (nr / BITS_PER_LONG));
+static inline int my_set_bit(int nr, unsigned long *addr) {
+    unsigned long *p = ((unsigned long *)addr + (nr / BITS_PER_LONG));
+    unsigned long bitmask = 1 << (nr % BITS_PER_LONG);
+    unsigned long flags;
+    raw_local_irq_save(flags);
+    *p |= (bitmask);
+    raw_local_irq_restore(flags);
     return 0;
 
 }
