@@ -30,7 +30,7 @@ source structure
 # To kill application
 > kill -9 $(ps -eaf | grep -i "cproject" | grep -v grep | awk '{print $2}')
 # For building kernel module
-> make clean;make all;
+> cd kernelspace; make clean;make all;
 # use following to debug malloc/free of a process
 > gdb -x gdbs_free -p <pid>
 # objdump
