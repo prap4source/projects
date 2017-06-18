@@ -4,7 +4,8 @@ source structure
 
 |Directory|Type|Last Updated|
 |---|---|---|
-|src | c/c++ files|
+|src_c | c files|
+|src_cpp | c++ files|
 |obj | obj files  |
 |bin | executable |
 |include_c | C include files |
