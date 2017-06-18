@@ -10,6 +10,7 @@ source structure
 |bin | executable |
 |include_c | C include files |
 |include_cpp | C++ include files |
+|kernelspace | kernel driver module|
 
 # For compiling 'c' code
 - make all CC=gcc
@@ -30,7 +31,9 @@ source structure
 > kill -9 $(ps -eaf | grep -i "cproject" | grep -v grep | awk '{print $2}')
 # For building kernel module
 > make clean;make all;
+# use following to debug malloc/free of a process
+> gdb -x gdbs_free -p <pid>
 # objdump
 > objdump -Swx --line-numbers <object>
-# Use following to debug malloc/free of a process
-> gdb -x gdbs_free -p <pid>
+
+
