@@ -48,7 +48,7 @@ int modifybits(int num) {
     printf("Enter bit to set ?\n");
     scanf("%d", &flag);
     *addr = num;
-    set_bit(flag, addr);
+    set_bit(flag, (ulong *)addr);
     printf("setbit(%d:%p) num(%d:%d)\n",flag, addr, num ,*addr);
     ret = *addr;
     free(addr);

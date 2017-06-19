@@ -255,8 +255,7 @@ string multiplyStrings(string num1, string num2)
 int findMaxHistArea(int H[],int W) {
     
 
-
-
+	return 0;
 }
 
 void start_stests(int argc, char *argv[]) {

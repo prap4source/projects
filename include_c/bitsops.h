@@ -8,6 +8,7 @@
 #define  raw_local_irq_save(x) 
 #define  raw_local_irq_restore(x)
 #endif
+typedef unsigned long int  ulong;
 #define set_bit my_set_bit
 #define test_bit my_test_bit
 #define test_and_clear_bit my_test_and_clear_bit
@@ -41,7 +42,7 @@ static inline int my_test_bit(int nr, unsigned long *addr) {
 }
 
 static inline int my_test_and_clear_bit(int nr, unsigned long *addr) {
-    ulong *p = ((ulong)addr + (nr / BITS_PER_LONG));
+    ulong *p = ((ulong *)addr + (nr / BITS_PER_LONG));
     ulong bitmask = (1UL << (nr % BITS_PER_LONG));
     ulong flags;
     ulong old;
@@ -55,7 +56,7 @@ static inline int my_test_and_clear_bit(int nr, unsigned long *addr) {
 
 static inline int my_test_and_change_bit(int nr, unsigned long *addr) {
 
-    ulong *p = ((ulong)addr + (nr / BITS_PER_LONG));
+    ulong *p = ((ulong *)addr + (nr / BITS_PER_LONG));
     ulong bitmask = (1UL << (nr % BITS_PER_LONG));
     ulong flags;
     ulong old;

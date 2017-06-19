@@ -40,8 +40,8 @@ void start_test(int argc, char *argv[]) {
 			 * in 8 GB upto 2^33 and so on */			
 			uint64_t alloc_mem = pow(2,32);
 			uint64_t *addr =  malloc(alloc_mem);
-			printf("(%lp:%Ld) mem alloc\n", addr, alloc_mem);
-			set_bit(35, addr);
+			printf("(%p:%lld) mem alloc\n", addr, alloc_mem);
+			set_bit(35, (ulong *)addr);
 			free(addr);
 			
 		}

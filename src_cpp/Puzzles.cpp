@@ -60,7 +60,7 @@ bool isValid(string s) {
             
             if ((c == '(')  || ( c =='{' )|| (c == '[' ))
                  st.push(c);
-            else if ((c == ')') || (c =='}') || (c || ']')) {
+            else if ((c == ')') || (c =='}') || (c == ']')) {
                 if (!st.size() || c != match(st.top()))
                         return false;
                 st.pop();
