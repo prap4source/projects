@@ -194,6 +194,31 @@ int findComplement(int num) {
         return (~num & ~mask);
 }
 
+/*Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
+    Note:
+    Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
+    Logic: Use a bit mask to count bits set for each position of bit and modulus by 3
+*/
+int singleNumberIII(int* nums, int numsSize) {
+    long long int bits[32] = {0};
+    int result =0;
+    
+    for (int i =0; i<numsSize; i++) {
+    /* Count number of set bits*/
+        for (int j=0; j< 32; j++) {
+            if (nums[i] & (1<<j))
+                bits[j]++;
+        }
+    }
+    
+    for (int j=0; j<32;j++) {
+        if (bits[j] % 3)
+            result |= (1<<j);
+    }
+    
+    return result;
+}
+
 char *convertTobits(int num) {
     int size = sizeof(num)* 8, i;
     char *str = malloc(size + 1); /*33 bits */
