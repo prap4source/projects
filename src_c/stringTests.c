@@ -2,6 +2,7 @@
  * Stringtest.c
  */
 #include "common.h"
+#include "operations.h"
 /* Multiply integers represented as strings */
 char *multiplyStrings(char *num1, char *num2) {
 	char *num3;
@@ -40,6 +41,60 @@ char *multiplyStrings(char *num1, char *num2) {
     free(num3);
     return ans;
 }
+
+
+/* Given two non-negative integers num1 and num2 represented as string, return the sum of num1 and num2.
+    Both num1 and num2 contains only digits 0-9. Both num1 and num2 does not contain any leading zero.
+    You must not use any built-in BigInteger library or convert the inputs to integer directly.
+    Logic: Start from end of the strings and add digits */
+
+char* addStrings(char* num1, char* num2) {
+    char *num3;
+    int l1 = strlen(num1);
+    int l2 = strlen(num2);
+    int carry = 0;
+    if (!l1)
+        return num2;
+    if (!l2)
+        return num1;
+    int size = max(l1,l2) +1; /* 1 for carry */
+    int k;
+    num3 = (char *)calloc(1, size);
+    l1--;
+    l2--;
+    
+    k = size-1;
+    while ((l1 >= 0) || (l2 >=0)) {
+        int sum = carry ;
+        if (l1 >= 0) {
+            sum += num1[l1] - '0';
+            l1--;
+        }
+        if (l2 >= 0) {
+            sum += num2[l2] - '0';
+            l2--;
+        }
+        num3[k] = (sum %10) + '0';
+        carry = (sum / 10);
+        k--;
+        
+    }
+    log("carry%d k%d size:%d) \n",carry, k, size);
+    if (carry) {
+        num3[k] = carry + '0';
+        
+        return num3;
+    } else { /* readjust num3 */
+        char *num4 = calloc(1, size);
+        log ("k%d num3(%s) \n",num3, size);
+        for (k=1;k<size;k++) {
+            num4[k-1] = num3[k];
+        }
+        free(num3);
+        return num4;
+    }
+}
+
 /* Compare two versions like 1.2 , 1.13 and return 1 if version 1 is bigger 
  * and -1 if version1 is smaller or 0 
  */ 
