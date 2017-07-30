@@ -43,3 +43,5 @@ void printDuplicates(int *arr, int len);
 int findMinSlideSize(int arr[], int m, int swSize);
 /* bit tests*/
 func_def(bittests)
+/* C basic tests */
+func_def(cbatests)

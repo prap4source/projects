@@ -1,3 +1,8 @@
+/*
+ * bitTests.c
+ * Copyright 2017 Pradeep Gopanapalli 
+ * 
+ */
 #include "common.h"
 #include "operations.h"
 #include "bitsops.h"

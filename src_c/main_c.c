@@ -1,4 +1,8 @@
-/* Main program to call socket server /client or hash programs */
+/*
+ * main_c.c Main program to call socket server /client or hash programs
+ * Copyright 2017 Pradeep Gopanapalli 
+ * 
+ */
 #include <stdio.h>
 #include "common.h"
 /* fptr is function pointer which takes void and returns void */
@@ -13,7 +17,8 @@ stringcase myCases[] = {{"server", start_server},
 		      {"hash", start_hprogram},
 		      {"md5csum",start_md5},
 		      {"tests",start_test},
-		      {"bittests",start_bittests}};
+		      {"bittests",start_bittests},
+		      {"ptrtests", start_cbatests}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;

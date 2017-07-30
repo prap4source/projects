@@ -1,4 +1,9 @@
-/* Some coding challenges asked in interviews */
+/*
+ * tests.c Some coding challenges asked in interviews
+ * Copyright 2017 Pradeep Gopanapalli 
+ * 
+ */
+
 #include "common.h"
 #include "bitsops.h"
 #include <stdlib.h>
