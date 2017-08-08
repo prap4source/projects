@@ -171,7 +171,7 @@ void DeleteNode(EType item) {
 }; /* End of Class */
 
 /* Reverse linked List 
-   Store next node in result and traverse curr pointer to next element */
+   Store next node in temp and traverse curr pointer to next element */
 void reverseList(ListNode **head, bool print) {
     ListNode *result, *curr, *temp;
     curr = *head;
@@ -266,7 +266,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
   }
   return (reverse(dummy.next));
 }
-/* Reverse from middle of list and start comparing start and middle
+/*check whether list is palindrome:  Reverse from middle of list and start comparing start and middle
 Eg: 1,5,4,5,1
 https://leetcode.com/problems/palindrome-linked-list/?tab=Description
 */
@@ -346,7 +346,7 @@ ListNode* deleteDuplicates(ListNode* head) {
         cout <<"Deleted Duplicates numbers\n";
         return head;
     }
-    
+/* Delete all duplicate nodes including one which is duplicate */    
 ListNode* deleteAllDuplicates(ListNode* head) {
         ListNode *first = head;
         ListNode *prev = NULL;
