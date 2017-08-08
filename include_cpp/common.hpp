@@ -24,6 +24,7 @@
  app_type(hash)
  app_type(stests)
  app_type(puzzles)
+ app_type(classes);
 
 
  /* fptr is function pointer which takes void and returns void */
@@ -36,5 +37,6 @@
 static stringcase myCases[] = {{"hash", start_hash},
 			 {"string", start_stests},
 			 {"puzzles", start_puzzles},	
-			 {"singlelist", start_slist}};
+			 {"singlelist", start_slist},
+			 {"lessons", start_classes}};
 
