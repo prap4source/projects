@@ -5,6 +5,8 @@
  */
 #include <stdio.h>
 #include "common.h"
+long long int alloc_mem;
+long long int freed_mem;
 /* fptr is function pointer which takes void and returns void */
 typedef void (*fptr)(int argc, char *argv[]);
 typedef struct scase {
@@ -18,6 +20,7 @@ stringcase myCases[] = {{"server", start_server},
 		      {"md5csum",start_md5},
 		      {"tests",start_test},
 		      {"bittests",start_bittests},
+		      {"singlelist",start_llist},
 		      {"ptrtests", start_cbatests}};
 
 int main(int argc, char *argv[]) {
@@ -38,5 +41,6 @@ int main(int argc, char *argv[]) {
 			printf("%s/", myCases[i].str);
 		printf(">\n");
 	}
+	log_info("memory (%lld:%lld)", alloc_mem, freed_mem);
 	return 0;
 }

@@ -1,3 +1,8 @@
+/*
+ * common.h
+ * Copyright 2017 Pradeep Gopanapalli 
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +14,7 @@
 #include <limits.h>
 #include <ctype.h>
 #include <stdint.h>
+#include <errno.h>
 
 #ifdef DEBUG
 #define log(fmt,...) printf("%s:%d::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
@@ -16,10 +22,13 @@
 #define log(fmt, ...) { }
 #endif
 #define log_err(fmt,...) printf("%s:%d Error::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
+#define log_info(fmt,...) printf("%s:%d INFO::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
 #define func_def(type) void start_##type(int argc, char *argv[]);
 #define MAX_HASH 10
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256
+
+#define SUCCESS 0
 /* Socket API's */
 func_def(server);
 func_def(client);
@@ -45,3 +54,5 @@ int findMinSlideSize(int arr[], int m, int swSize);
 func_def(bittests)
 /* C basic tests */
 func_def(cbatests)
+/* single linked list */
+func_def(llist);
