@@ -8,10 +8,8 @@
 #include "bitsops.h"
 #include <stdlib.h>
 
-
 /* (TBD)(INT_QUEST)https://www.careercup.com/question?id=14424684 */
 char *read4k(char *buf, int num) {
-
 	return NULL;
 }
 

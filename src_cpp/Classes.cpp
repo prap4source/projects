@@ -1,32 +1,15 @@
+/*
+ * Copyright 2017 Pradeep Gopanapalli
+ * Classes.c
+ *
+ */
 #include "common.hpp"
-using namespace std;
-class cloud {
- public:
-       void print() {
-              cout <<"This is "<<name<<" class"<<endl;
-       }
-       cloud() {
-	 name = __func__;
-	}
- private:
- 	const char *name;
-	
- };
+#include "classes.hpp"
 
-class privateCloud: public cloud {
- public:
-       void print() {
-              cout <<"This is "<<name<<" class"<<endl;
-       }
-       privateCloud() {
-	 name = __func__;
-	}
- private:
- 	const char *name;
-};
+using namespace std;
 
 void start_classes(int argc, char *argv[]) {
- 	cloud a;
+	cloud a;
 	privateCloud b;
 	a.print();
 	b.print();

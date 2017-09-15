@@ -1,4 +1,8 @@
-/* Some coding challenges asked in interviews */
+/*
+ * Copyright 2017 Pradeep Gopanapalli
+ * arrayTests.c
+ * Some coding challenges asked in interviews
+ */
 #include "common.h"
 #include "operations.h"
 
@@ -7,7 +11,7 @@ int findMaxinArray(int *arr, int len) {
 	for (i=1; i < len ;i++) {
 		max_no = max(max_no, arr[i]);
 	}
-	return max_no;
+	return (max_no);
 }
 /** Find duplicates in a array using bitmask INT_QUEST
  *Use bitmask where each bit represents number 

@@ -21,7 +21,8 @@ stringcase myCases[] = {{"server", start_server},
 		      {"tests",start_test},
 		      {"bittests",start_bittests},
 		      {"singlelist",start_llist},
-		      {"ptrtests", start_cbatests}};
+		      {"ptrtests", start_cbatests},
+			  {"threads", start_thrtests}};
 
 int main(int argc, char *argv[]) {
 	bool not_found = true;

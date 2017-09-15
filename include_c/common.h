@@ -56,3 +56,5 @@ func_def(bittests)
 func_def(cbatests)
 /* single linked list */
 func_def(llist);
+/* Thread & synchronization  tests */
+func_def(thrtests);

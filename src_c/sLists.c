@@ -29,6 +29,11 @@ pslist create_node(int data) {
     node->next = NULL;
     return node;
 }
+/* Insert element, Linked list is already sorted 
+HEAD N1(3)->N2(6)->N3(10)
+insert(HEAD, 8)
+HEAD N1(3)->N2(6)->N3(8)-N4(10)
+*/
 int insert_node(pslist *head, int data) {
    pslist tmp =  *head;
    pslist prev = NULL;
