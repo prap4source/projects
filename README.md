@@ -14,7 +14,7 @@ source structure
 
 # For compiling 'c' code
 - make all CC=gcc
-- make all CC=gcc CFLAGS+="-g" LFLAGS+="-lcrypto" -> for md5sum
+- make all CC=gcc CFLAGS+="-g" LFLAGS+="-lcrypto -lpthread" -> for md5sum
 # For compiling 'c++' code
 > make all
 # To cleanup everything

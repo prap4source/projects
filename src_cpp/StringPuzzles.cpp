@@ -292,4 +292,10 @@ void start_stests(int argc, char *argv[]) {
     string s9 ="123";
     string s10 = "200";
     printf("multiply(%s,%s) ==> (%s)\n",s9.c_str(), s10.c_str(), multiplyStrings(s9,s10).c_str());
+
+    string s11 = "my name a is pradeep";
+    printf("reversewords(%s) ",s11.c_str());
+    res.reverseWords1(s11);
+    printf("====>(%s) \n ",s11.c_str());
+
 }

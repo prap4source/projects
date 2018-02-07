@@ -6,6 +6,12 @@
 #include "common.h"
 #include "bitsops.h"
 #include <stdlib.h>
+#include <stdio.h>
+
+union p {
+   int a;
+   char b;
+}k={1,25}; /* This will give Warning warning: excess elements in union initializer [enabled by default] */
 
 void start_cbatests(int argc, char *argv[]) {
     int a = 10;
@@ -29,6 +35,10 @@ void start_cbatests(int argc, char *argv[]) {
     /* ptr2 is constanct pointer to constant integer which means neither integer or pointer is modifiable 
      * ptr2++ or *ptr2 = b results in "cannot assign" or "read-only variable" errors*/
     const int *const ptr2 = &a;
-    
+  
+    printf("member of union %d \n",k.a); /*Prints 1 as it is the first value */
+
     
 }
+
+

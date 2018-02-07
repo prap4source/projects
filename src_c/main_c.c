@@ -21,7 +21,7 @@ stringcase myCases[] = {{"server", start_server},
 		      {"tests",start_test},
 		      {"bittests",start_bittests},
 		      {"singlelist",start_llist},
-		      {"ptrtests", start_cbatests},
+		      {"cbasic", start_cbatests},
 			  {"threads", start_thrtests}};
 
 int main(int argc, char *argv[]) {

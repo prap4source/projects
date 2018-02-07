@@ -8,7 +8,7 @@ ifeq ($(CC),gcc)
 	TARGET=cproject
 	EXT=c
 	LINKER=gcc
-	override CFLAGS+= -I . --std=gnu99
+	override CFLAGS+= -I . -std=gnu99
 	override LFLAGS+= -g -lcrypto
 else
 	SRCDIR   = src_cpp
