@@ -26,7 +26,7 @@ void start_test(int argc, char *argv[]) {
 	log ("num of arguments %d",argc);
 	
 	if (argc <= 3) {
-		log_err("Usage: <tests> <> <arg>");
+		log_err("Usage: <tests> <multiply/compvers/atoi/array/putc/generic> <arg>");
 		return ;
 	}
 	
