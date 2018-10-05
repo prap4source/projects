@@ -11,7 +11,9 @@ source structure
 |include_c | C include files |
 |include_cpp | C++ include files |
 |kernelspace | kernel driver module|
-
+# pre-requisties
+yum install openssl-devel
+mkdir -p obj bin
 # For compiling 'c' code
 - make all CC=gcc
 - make all CC=gcc CFLAGS+="-g" LFLAGS+="-lcrypto -lpthread" -> for md5sum
