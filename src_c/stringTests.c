@@ -158,3 +158,32 @@ int myAtoi(char* str) {
     }
     return (sign * sum);
 }
+char isUpper(char s) {
+    if (s >= 'A' && s <= 'Z')
+        return 1;
+    return 0;
+}
+/* Implement function ToLowerCase() that has a string parameter str, and returns the same string in lowercase.
+https://leetcode.com/submissions/detail/180709866/ 
+Input: "Hello"
+Output: "hello"
+*/
+
+char* toLowerCase(char* str) {
+    int len = strlen(str);
+    int i = 0;
+    char *result = malloc(len * sizeof(char));
+    
+    if (result == NULL)
+        return NULL;
+    
+    while (i < len) {
+        if (isUpper(str[i]))
+            result[i] = str[i] - 'A' + 'a';
+        else 
+            result[i] = str[i];
+        i++;
+    }
+    result[i] = '\0';
+    return result;
+}

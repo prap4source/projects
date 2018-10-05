@@ -21,12 +21,20 @@ void printwithput(int val) {
 		putc(rem + '0', stdout);
 	} 
 }
-
+static inline void leetcode_test(char *str) {
+	char *ret;
+	if (str == NULL) {
+		printf("Please pass argument \n");
+		return;
+	}
+	ret  = toLowerCase(str);
+	printf("Input:%s output:%s \n", str, ret);
+}
 void start_test(int argc, char *argv[]) {
 	log ("num of arguments %d",argc);
 	
 	if (argc <= 3) {
-		log_err("Usage: <tests> <multiply/compvers/atoi/array/putc/generic> <arg>");
+		log_err("Usage: <tests> <multiply/compvers/atoi/array/putc/generic/leetcode> <arg>");
 		return ;
 	}
 	
@@ -61,6 +69,8 @@ void start_test(int argc, char *argv[]) {
 			set_bit(35, (ulong *)addr);
 			free(addr);
 		}
+	} else if (!strcmp(argv[2], "leetcode")) {
+			leetcode_test(argv[3]);
 	} else {
 		log_err("Usage: <tests> <>");
 	}
