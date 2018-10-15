@@ -71,14 +71,12 @@ static inline int my_test_and_change_bit(int nr, unsigned long *addr) {
 
 }
 
-static inline int my_set_bit(int nr, unsigned long *addr) {
+static inline void  my_set_bit(int nr, unsigned long *addr) {
     unsigned long *p = ((unsigned long *)addr + (nr / BITS_PER_LONG));
     unsigned long bitmask = 1 << (nr % BITS_PER_LONG);
     unsigned long flags;
     raw_local_irq_save(flags);
     *p |= (bitmask);
     raw_local_irq_restore(flags);
-    return 0;
-
 }
 
