@@ -32,6 +32,7 @@ static inline int misc_bits(int num, int position) {
     v =  v && !(v & (v - 1)); /* Note that 0 is incorrectly considered a power of 2 here */
     return 0;
 }
+#ifndef NONATOMIC_OP
 /* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 
  * test bit in given address*/
 
@@ -43,7 +44,6 @@ static inline int my_test_bit(int nr, unsigned long *addr) {
     return (res & bitmask) != 0;
     
 }
-#ifndef ATOMIC_OP
 static inline int my_test_and_clear_bit(int nr, unsigned long *addr) {
     ulong *p = ((ulong *)addr + (nr / BITS_PER_LONG));
     ulong bitmask = (1UL << (nr % BITS_PER_LONG));
@@ -78,10 +78,10 @@ static inline int my_test_and_set_bit(int nr , unsigned long *addr) {
 
 	raw_local_irq_save(flags);
 	old = *p;
-	*p |= mask;
+	*p |= bitmask;
 	raw_local_irq_restore(flags);
 	
-	return (old & mask) != 0;
+	return (old & bitmask) != 0;
 }
 	
 
