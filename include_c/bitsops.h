@@ -27,11 +27,14 @@ static inline int misc_bits(int num, int position) {
 	return 1;
     if (!(num & (num - 1))) /* Program to check whether a number is power of 2 or not */
 	return 1;
-    num= (num << 3) - num; /* Program to multiply a number by 7 without using a multiply */
+    num= (num << 3) - num; /* Program to multiply a number by 7(2^3-1) without using a multiply */
+    
     v =  v && !(v & (v - 1)); /* Note that 0 is incorrectly considered a power of 2 here */
     return 0;
 }
-/* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 */
+/* http://elixir.free-electrons.com/linux/latest/source/include/asm-generic/bitops/non-atomic.h#L103 
+ * test bit in given address*/
+
 static inline int my_test_bit(int nr, unsigned long *addr) {
     unsigned long *p = ((unsigned long *)addr + (nr / BITS_PER_LONG));
     unsigned long bitmask = 1 << (nr % BITS_PER_LONG);

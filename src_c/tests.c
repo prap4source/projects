@@ -35,6 +35,7 @@ void start_test(int argc, char *argv[]) {
 	
 	if (argc <= 3) {
 		log_err("Usage: <tests> <multiply/compvers/atoi/array/putc/generic/leetcode> <arg>");
+		log_err("Page size = %i bytes \n", getpagesize());
 		return ;
 	}
 	
