@@ -40,7 +40,7 @@ static inline int my_test_bit(int nr, unsigned long *addr) {
     return (res & bitmask) != 0;
     
 }
-
+#ifndef ATOMIC_OP
 static inline int my_test_and_clear_bit(int nr, unsigned long *addr) {
     ulong *p = ((ulong *)addr + (nr / BITS_PER_LONG));
     ulong bitmask = (1UL << (nr % BITS_PER_LONG));
@@ -90,4 +90,16 @@ static inline void  my_set_bit(int nr, unsigned long *addr) {
     *p |= (bitmask);
     raw_local_irq_restore(flags);
 }
+#else
+static inline void my_set_bit(int nr, ulong *addr) {
+	(((ulong *)addr)[nr / BITS_PER_LONG]) |= 1 << (nr % BITS_PER_LONG);
+}
 
+static inline void my_clear_bit(int nr, ulong *addr) { 
+	(((ulong *)addr)[nr / BITS_PER_LONG]) &= ~ (1<< (nr % BITS_PER_LONG));
+}
+
+static inline void my_test_bit(int nr, ulong *addr) {
+	return ((((ulong *)addr)[nr / BITS_PER_LONG]) & (1 << (nr % BITS_PER_LONG))) != 0;
+}
+#endif
