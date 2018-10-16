@@ -140,9 +140,10 @@ void InsertBefore(EType before, EType data) {
     else {
         Nodeptr newNode = new ListNode(0);
         newNode->data = data;
-        if (curr == head) /* Node has to be added before head */
-            newNode->next = head;
-        else {
+        if (curr == head) { /* Node has to be added before head */
+	    newNode->next = head;
+	    head = newNode;
+	} else {
             temp->next = newNode;
             newNode->next = curr;
         }
