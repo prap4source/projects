@@ -47,22 +47,26 @@ void FindMatchingSum(EType sum) {
 }
 /* Find whether List has a cycle/loop or not and return the start of loop*/
 ListNode* hasCycle(ListNode *head) {
-        ListNode *second = head, *first;
-        
-        while (second && second->next) {
-            second = second->next->next;
-            if (head == second) { /* Cycle detected */
+        ListNode *fast, *slow;
+	fast = slow = head;
+	        
+        while (fast && fast->next) {
+            slow = slow->next;
+	    fast = fast->next->next;
+            if (fast == slow) { /* Cycle detected */
                 /* detect start of the loop by following formula
                 https://leetcode.com/problems/linked-list-cycle-ii/?tab=Solutions*/ 
-                first = head;
-                while (first != second) {
-                    first = first->next;
-                    second = second ->next;
+		/* Once cycle is detected use one pointer start from the start node of list, 
+		another pointer start from the first meeting node, all of them wake one step at a time, 
+		the first time they meeting each other is the start of the cycle.*/
+                slow = head;
+                while (slow != fast) {
+                    fast = fast->next;
+                    slow = slow->next;
                 }
-                return first;
+                return fast;
             }
-            head = head->next;
-        }
+         }
         return NULL;
 }
 /* remove loop from list */
