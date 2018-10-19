@@ -469,7 +469,36 @@ ListNode* reverseBetween(ListNode* head, int m, int n) {
         ListNode *head1 = head;
         return (mergeLists(sortList(head1), sortList(head2)));
 }
-
+/* insertion sort o(n^2) time complexity o(1) space */
+void sortList2(ListNode **head) {
+	sList *pLastsorted, *pHead;
+	sList *pTobesorted;
+	if (*head == NULL && **head == NULL)
+		return;
+	pLastsorted = pHead = *head;
+	pTobesorted = pLastsorted->next;
+	while (pTobesorted != NULL) {
+		/* if data less than head, move head */
+		if (pTobesorted->data < pHead->data ) {
+			pLastsorted->next = pTobesorted->next;
+			pTobesorted->next = pHead->next;
+			pHead = pTobesorted;
+		} else {
+			sList *pNode = pHead;
+			while ((pNode != pLastsorted) && (pNode->next->data < pTobesorted->data))
+				pNode = pNode->next;
+			if (pNode == pLastsorted) /* List already sorted till pTobesorted */
+				pLastsorted = pLastsorted->next;
+			else { /* insert pLastsorted node after pNode */
+				pLastsorted->next = pTobesorted->next;
+				pTobesorted->next = pNode->next;
+				pNode->next = pTobeSorted;	
+			}
+		}
+	      pTobesorted = pLastsorted->next;	
+	}
+	*head = pHead;
+}
 /* group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
    https://leetcode.com/problems/odd-even-linked-list/?tab=Description 
    Example: Given 1->2->3->4->5->NULL, return 1->3->5->2->4->NULL.
