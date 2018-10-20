@@ -7,6 +7,12 @@ typedef struct ListNode {
             ListNode(int x) : data(x), next(NULL) {}
             ListNode() : next(NULL) {}
 } *Nodeptr;
+
+typedef struct RListNode {
+	    int data;	
+	    struct SRListNode *next, *random;
+} *RNodeptr;
+
 typedef ListNode Node;
 class SingleList {
     private:
@@ -127,6 +133,8 @@ void InsertAfter(EType after, EType data) {
     }
 }
 
+
+	
 /* Insert a element before a given key */
 void InsertBefore(EType before, EType data) {
     temp  = curr = head;
@@ -271,6 +279,56 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
   }
   return (reverse(dummy.next));
 }
+
+/* Clone list with random pointer https://leetcode.com/problems/copy-list-with-random-pointer/discuss/ */
+RListNode *cloneRList(RListNode *head) {
+	RListNode *cloneHead = NULL, *cnode;
+	RListNode *onode = head;
+	if (head == NULL)
+		return NULL;
+	/* Step 1: 
+	   Build the 2nd list by creating a new node for each node in 1st list. 
+	   While doing so, insert each new node after it's corresponding node in 
+	   the 1st list A->A1->B->B1->C-C1 
+	 */
+	while (onode) {
+		cnode = calloc(0, sizeof(struct RListNode));
+		if (cnode == NULL)
+			return NULL;
+		cnode->data = onode->data;
+		cnode->next = onode->next;
+		onode->next = cnode;
+		onode = cnode->next;
+	}
+	cloneHead = head->next;
+	
+	/* Step two 
+	   Fix the random pointers in the 2nd list: (Remember that onode->next is actually cnode)
+           cnode->random will be the node in 2nd list that corresponds onode->random, 
+	   which is next node of onode->random 
+	*/
+	onode = head;
+	while (onode) {
+		if (onode->random)
+			onode->next->random = onode->random->next;
+		onode = onode->next->next;
+	}
+	
+	/* Step 3:
+	   Separate the combined list into 2: Splice out nodes that are part of second list. 
+           Return the new head that we saved in step 2 */
+	onode = head;
+	while (onode) {
+		cnode = onode->next;
+		onode->next = cnode->next;
+		if (cnode->next)
+			cnode->next = cnode->next->next;
+	}
+	
+	return cloneHead;
+}
+
+
 /*check whether list is palindrome:  Reverse from middle of list and start comparing start and middle
 Eg: 1,5,4,5,1
 https://leetcode.com/problems/palindrome-linked-list/?tab=Description
