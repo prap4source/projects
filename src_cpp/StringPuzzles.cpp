@@ -208,6 +208,72 @@ string reverseString(string s) {
         return s;
     }
 };
+
+
+		    
+/* Function to in-place remove all adjacent duplicates from 
+ the given string ,o(n^2)
+ http://www.techiedelight.com/in-place-remove-all-adjacent-duplicates-from-string */
+char* removeAdjDup1(char* str, int n)
+{
+    // k maintains the index of next free location in the result 
+    // and i maintains the current index in the string
+    int i, k = 0;
+    int len = strlen(str);
+
+    // start from second character
+    for (i = 1; i < len; i++) 
+    {
+        // if current character is not same as the 
+        // previous character, add it to result
+        if (str[i - 1] != str[i])
+            str[k++] = str[i - 1];
+        else
+        {
+            // remove adjacent duplicates
+            while (i < len && str[i - 1] == str[i])
+                i++;
+        }
+    }
+    // Add last character to result
+    str[k++] = str[i - 1];
+    
+    // null terminate the string
+    str[k] = '\0';
+
+    // start again if any duplicate is removed
+    if (k != n)
+        return removeAdjDup(str, k); // Shlemiel Painter's Algorithm
+    
+    // if the algorithm didn't change the input string, that means
+    // all the adjacent duplicates are removed
+    return str;
+}
+
+/* Remove adjacent duplicate numbers o(n) o(1)
+http://www.techiedelight.com/in-place-remove-all-adjacent-duplicates-from-string */
+void removeAdjacent2(string &str) {
+	int i, k, len;
+	char prev;
+	
+	i = 1; /*start from second character */
+	k =0; /*k maintains the index of last filled location in the result */
+	len = strlen(str);
+	prev = str[0]; /* prev points to last unique character */
+	
+	while ( i < len ){
+		if (prev == str[i] {
+			str[++k] == str[i++];
+			prev = str[k]; /* update prev */
+		} else {
+			while (prev == str[i]) /* remove adjacent duplicates */
+				i++;
+			prev = str[--k]; /* revert prev to previous unqiue character */
+		}
+       }
+       str.erase(k+1); /* As the length is from 0.k */
+}
+
 /* Implement strstr Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 https://leetcode.com/problems/implement-strstr/?tab=Description */
 int strStr(string haystack, string needle) {
