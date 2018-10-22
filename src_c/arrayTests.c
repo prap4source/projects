@@ -33,6 +33,20 @@ void printDuplicates(int *arr, int len) {
 	free(bitmask);
 }
 
+/* reverse a integer x and return reversed value */
+int reverseInt(int x) {
+    int y = 0;
+    while (x) {
+        int temp = y;
+        y = (x %10) + y *10;
+        x = x /10;
+        if (y/10 != temp) { /* Check for underflow or overflow */
+        	printf("underflow/overflow returning zero(%d:%d) \n",temp, y/10);    
+                return 0;
+        }
+    }
+    return y;
+}
 
 /**  Find minimum sliding window size (INT_QUEST)
  * e.g. array[7] ={ 1, 0, -1, 2, 1, 0, -2 } ,swSize = 3
