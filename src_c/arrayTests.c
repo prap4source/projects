@@ -148,3 +148,24 @@ void quicksort(int arr[], int low, int high) {
 	}
 }
 	
+/* selection sort works by iterating array and finding a minimum element 
+   and putting it to start of list  The algorithm maintains two subarrays in a given array.
+1) The subarray which is already sorted.
+2) Remaining subarray which is unsorted.
+In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray is picked and moved to the sorted subarray. 
+o(n^2) space o(1)
+https://www.geeksforgeeks.org/selection-sort/
+*/
+void selectionsort(int arr[], int size) {
+	int i, j;
+	for (i=0; i<size-1; i++) {
+		int min_idx = i;
+		for (j=1; j < size ;j++) {
+			if (a[j] < a[min_idx]) 
+				min_idx = j;
+		}
+		swap(a[i], a[min_idx]);
+	}
+}
+			
+}
