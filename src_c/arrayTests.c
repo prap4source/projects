@@ -111,3 +111,40 @@ int findFibN(int n) {
 	for (int i =2;i<=n;i++)
 	    f[i] = f[i-1] + f[i-2];
 }
+
+/* Target of partitions is, given an array and an element x of array as pivot, 
+   put x at its correct position in sorted array and put all smaller elements 
+   (smaller than x) before x, and put all greater elements (greater than x) after x. 
+   All this should be done in linear time. */
+int partition(int arr[], int low, int high) {
+	int pivot, i, j;
+	pivot = arr[high];
+	i = (low-1); /* Index of smaller element*/
+	for (j = low; j < high; j++) {
+		if (a[j] <= pivot) { /* if current element is smaller then pivot*/
+			i++; /* Increment index of smaller element /
+			if (i != j) /* optimizimation */
+			  swap(a[i], a[j]);
+		}
+	}
+	if (i != (high-1)) /* optimizimation */
+	    swap(a[i+1], a[high]);
+	return (i+1);
+}
+/* Quick sort time complexity o(nlogn) and Doesnt require any extra space
+   https://www.geeksforgeeks.org/quick-sort/ 
+    QuickSort is a Divide and Conquer algorithm. It picks an element as pivot and partitions the given array around the picked pivot. There are many different versions of quickSort that pick pivot in different ways.
+    Always pick first element as pivot.
+    Always pick last element as pivot (implemented below)
+    Pick a random element as pivot.
+    Pick median as pivot.
+*/
+void quicksort(int arr[], int low, int high) {
+	int pi; /* partition */
+	if (low < high) {
+		pi = partition(arr, low, high);
+		quicksort(arr, low, pi-1); /*before pivot */
+		quicksort(arr, pi+1, high); /*after pivot */
+	}
+}
+	
