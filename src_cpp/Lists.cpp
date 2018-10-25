@@ -539,7 +539,7 @@ void sortList2(ListNode **head) {
 		/* if data less than head, move head */
 		if (pTobesorted->data < pHead->data ) {
 			pLastsorted->next = pTobesorted->next;
-			pTobesorted->next = pHead->next;
+			pTobesorted->next = pHead;
 			pHead = pTobesorted;
 		} else {
 			sList *pNode = pHead;
