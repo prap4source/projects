@@ -189,7 +189,7 @@ int reverseBits(int n) {
         }
         return m;
 }
-/* Given a number 101 -> find complement 010 without trailing zeros
+/* Flip bitsGiven a number 101 -> find complement 010 without trailing zeros
 https://leetcode.com/submissions/detail/94678943  */
 int findComplement(int num) {
         int mask = ~0;
@@ -198,7 +198,17 @@ int findComplement(int num) {
         while (num & mask) mask <<=1;
         return (~num & ~mask);
 }
-
+/* Find highest bit set in a number */
+int findHighBit(unsigned int n) {
+    int mask = ~0;
+    int count = 0;
+    while (mask & n) {
+        count++;
+        mask<<=1;
+    }
+    return count;
+    
+}
 /*Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
     Note:
     Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
