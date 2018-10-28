@@ -68,6 +68,30 @@ int findMinSlideSize(int arr[], int m, int swSize) {
      return (min_size);
 }
 
+/* Find number of slots remaining in a theatre row, you can't place no 
+ * two people next to each other
+   Eg: [100000111] is input data->output is "2" as you seat two people
+   like[101010111]
+   Eg: 1010101000 -> 1010101010 ====> 1 person
+   Eg: 0001010001 -> 0101010101 ====> 2 person
+*/
+
+int findSlots(int a[] ,int size) {
+	int slot = 0;
+	int i=1;
+	while (i < size) {
+	  if (a[i]) {
+	    i++;
+	  } else {
+	    if (!a[i-1] && (i<size && !a[i+1])) {
+		slot++;
+		i++;
+	    }
+	  }
+	  i++;
+	}
+	return slot;
+}
 /* Find fibannoci series using Memorization method ,Dynammic programming method 1 
  Memoization (Top Down): The memoized program for a problem is similar to the recursive 
  version with a small modification that it looks into a lookup table before computing 
@@ -75,7 +99,8 @@ int findMinSlideSize(int arr[], int m, int swSize) {
  need the solution to a subproblem, we first look into the lookup table. If the 
  precomputed value is there then we return that value, otherwise, 
  we calculate the value and put the result in the lookup table so that it can be reused later.*/
-int f[MAX] = -1;
+#define MAX 255
+int f[MAX];
 int fibN(int n) {
     if (f[n] == -1) {
         if (n <= 1)
@@ -110,6 +135,7 @@ int findFibN(int n) {
 	f[1] =1;
 	for (int i =2;i<=n;i++)
 	    f[i] = f[i-1] + f[i-2];
+	return f[n+1];
 }
 
 /* Target of partitions is, given an array and an element x of array as pivot, 
@@ -121,14 +147,15 @@ int partition(int arr[], int low, int high) {
 	pivot = arr[high];
 	i = (low-1); /* Index of smaller element*/
 	for (j = low; j < high; j++) {
-		if (a[j] <= pivot) { /* if current element is smaller then pivot*/
-			i++; /* Increment index of smaller element /
+		if (arr[j] <= pivot) { /* if current element is smaller then pivot*/
+			i++; /* Increment index of smaller element */
 			if (i != j) /* optimizimation */
-			  swap(a[i], a[j]);
+			  swap(arr[i], arr[j]);
 		}
 	}
 	if (i != (high-1)) /* optimizimation */
-	    swap(a[i+1], a[high]);
+	    swap(arr[i+1], arr[high]);
+
 	return (i+1);
 }
 /* Quick sort time complexity o(nlogn) and Doesnt require any extra space
@@ -156,7 +183,7 @@ In every iteration of selection sort, the minimum element (considering ascending
 o(n^2) space o(1)
 https://www.geeksforgeeks.org/selection-sort/
 */
-void selectionsort(int arr[], int size) {
+void selectionsort(int a[], int size) {
 	int i, j;
 	for (i=0; i<size-1; i++) {
 		int min_idx = i;
@@ -166,6 +193,4 @@ void selectionsort(int arr[], int size) {
 		}
 		swap(a[i], a[min_idx]);
 	}
-}
-			
 }

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-
 #include "common.hpp"
 using namespace std;
 typedef struct TreeNode {
@@ -223,7 +222,7 @@ void clear_queue(queue<Treep> &q) {
     while (q.size()) q.pop();
 }
 
-void whattodo() {
+void start_trees(int argc, char *argv[]) {
     SingleTree first;
     Treep root1,root2,root3;
     queue<Treep> q;

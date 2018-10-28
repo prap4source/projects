@@ -10,7 +10,7 @@ typedef struct ListNode {
 
 typedef struct RListNode {
 	    int data;	
-	    struct SRListNode *next, *random;
+	    struct RListNode *next, *random;
 } *RNodeptr;
 
 typedef ListNode Node;
@@ -57,7 +57,6 @@ ListNode* hasCycle(ListNode *head) {
 	fast = slow = head;
 	        
         while (fast && fast->next) {
-            slow = slow->next;
 	    fast = fast->next->next;
             if (fast == slow) { /* Cycle detected */
                 /* detect start of the loop by following formula
@@ -72,6 +71,7 @@ ListNode* hasCycle(ListNode *head) {
                 }
                 return fast;
             }
+            slow = slow->next;
          }
         return NULL;
 }
@@ -282,7 +282,8 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
 /* Clone list with random pointer https://leetcode.com/problems/copy-list-with-random-pointer/discuss/ */
 RListNode *cloneRList(RListNode *head) {
-	RListNode *cloneHead = NULL, *cnode;
+	RListNode *cloneHead = NULL;
+	RListNode *cnode;
 	RListNode *onode = head;
 	if (head == NULL)
 		return NULL;
@@ -292,7 +293,7 @@ RListNode *cloneRList(RListNode *head) {
 	   the 1st list A->A1->B->B1->C-C1 
 	 */
 	while (onode) {
-		cnode = calloc(0, sizeof(struct RListNode));
+		cnode = (RListNode *)calloc(0, sizeof(struct RListNode));
 		if (cnode == NULL)
 			return NULL;
 		cnode->data = onode->data;
@@ -529,9 +530,9 @@ ListNode* reverseBetween(ListNode* head, int m, int n) {
 }
 /* insertion sort o(n^2) time complexity o(1) space */
 void sortList2(ListNode **head) {
-	sList *pLastsorted, *pHead;
-	sList *pTobesorted;
-	if (*head == NULL && **head == NULL)
+	ListNode *pLastsorted, *pHead;
+	ListNode *pTobesorted;
+	if (head == NULL || *head == NULL)
 		return;
 	pLastsorted = pHead = *head;
 	pTobesorted = pLastsorted->next;
@@ -542,7 +543,7 @@ void sortList2(ListNode **head) {
 			pTobesorted->next = pHead;
 			pHead = pTobesorted;
 		} else {
-			sList *pNode = pHead;
+			ListNode *pNode = pHead;
 			while ((pNode != pLastsorted) && (pNode->next->data < pTobesorted->data))
 				pNode = pNode->next;
 			if (pNode == pLastsorted) /* List already sorted till pTobesorted */
@@ -550,7 +551,7 @@ void sortList2(ListNode **head) {
 			else { /* insert pLastsorted node after pNode */
 				pLastsorted->next = pTobesorted->next;
 				pTobesorted->next = pNode->next;
-				pNode->next = pTobeSorted;	
+				pNode->next = pTobesorted;	
 			}
 		}
 	      pTobesorted = pLastsorted->next;	

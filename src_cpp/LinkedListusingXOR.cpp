@@ -65,10 +65,9 @@ void List::Traverse() {
 }
 
 void create_xlist(void) {
-List first;
-for (EType i =0; i <10; i ++) {
-    first.InsertAtHead(i);
-}
-first.Traverse();
-return 0;
+	List first;
+	for (EType i =0; i <10; i ++) {
+		first.InsertAtHead(i);
+	}
+	first.Traverse();
 }

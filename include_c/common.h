@@ -46,11 +46,13 @@ char *calc_md5(char *fileName);
 char *check_hash_for_md5(char *key);
 /* tests to run */
 char *multiplyStrings(char *n1, char *n2);
+char findDifferene(char *s, char *t);
 int compareVersion(char *v1, char *v2);
 int myAtoi(char *str);
 char *toLowerCase(char *str);
 void printDuplicates(int *arr, int len);
 int findMinSlideSize(int arr[], int m, int swSize);
+int findSlots(int arr[], int size);
 /* bit tests*/
 func_def(bittests)
 /* C basic tests */
@@ -59,3 +61,5 @@ func_def(cbatests)
 func_def(llist);
 /* Thread & synchronization  tests */
 func_def(thrtests);
+
+#define swap(a, b) do { a = b + a ; b = a - b ; a = a - b ; } while (0) 

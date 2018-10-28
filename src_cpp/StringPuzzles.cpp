@@ -243,14 +243,14 @@ char* removeAdjDup1(char* str, int n)
 
     // start again if any duplicate is removed
     if (k != n)
-        return removeAdjDup(str, k); // Shlemiel Painter's Algorithm
+        return removeAdjDup1(str, k); // Shlemiel Painter's Algorithm
     
     // if the algorithm didn't change the input string, that means
     // all the adjacent duplicates are removed
     return str;
 }
 
-/* Remove adjacent duplicate numbers o(n) o(1)
+/* Remove adjacent duplicate numbers,Time o(n), Space o(1)
 http://www.techiedelight.com/in-place-remove-all-adjacent-duplicates-from-string */
 void removeAdjacent2(string &str) {
 	int i, k, len;
@@ -258,12 +258,12 @@ void removeAdjacent2(string &str) {
 	
 	i = 1; /*start from second character */
 	k =0; /*k maintains the index of last filled location in the result */
-	len = strlen(str);
+	len = str.length();
 	prev = str[0]; /* prev points to last unique character */
 	
-	while ( i < len ){
-		if (prev == str[i] {
-			str[++k] == str[i++];
+	while ( i < len ) {
+		if (prev != str[i]) { /* Not matching */
+			str[++k] = str[i++];
 			prev = str[k]; /* update prev */
 		} else {
 			while (prev == str[i]) /* remove adjacent duplicates */
