@@ -2,33 +2,8 @@
 using namespace std;
 class S {
     public:
-   /* Given a string "aabcccdddeffggggg" convert to a2b1c3d3e1f2g5 where each character 
-       is displayed with how many times it is repeated*/
-    string changeString(string s) {
-        char tmp , prev;
-        int i = 0;
-        int c_n =1;
-        prev = s[i++];
-        
-        while ( i < s.size()) {
-            tmp = s[i];
-            if (tmp == prev ) {
-                s.erase(i,1);
-                c_n++;
-            } else {
-                s.insert(i,to_string(c_n));
-                c_n = 1;
-                prev = tmp;
-                i = i + 2;
-            }
-        }
-        s.insert(i ,to_string(c_n));
-        return (s);
-    }
-    /* Given an input string, reverse the string word by word. For example, 
-       Given s = "the sky is blue", return "blue is sky the"
-       https://leetcode.com/problems/reverse-words-in-a-string/?tab=Description */
-       void reverseword(string &s,int i, int j) {
+    /* Helper functions */
+    void reverse(string &s,int i, int j) {
         while (i<j) {
             char temp = s[j];
             s[j] = s[i];
@@ -67,6 +42,34 @@ class S {
 	return NULL;
     }
 
+
+   /* Given a string "aabcccdddeffggggg" convert to a2b1c3d3e1f2g5 where each character 
+       is displayed with how many times it is repeated*/
+    string changeString(string s) {
+        char tmp , prev;
+        int i = 0;
+        int c_n =1;
+        prev = s[i++];
+        
+        while ( i < s.size()) {
+            tmp = s[i];
+            if (tmp == prev ) {
+                s.erase(i,1);
+                c_n++;
+            } else {
+                s.insert(i,to_string(c_n));
+                c_n = 1;
+                prev = tmp;
+                i = i + 2;
+            }
+        }
+        s.insert(i ,to_string(c_n));
+        return (s);
+    }
+
+    /* Given an input string, reverse the string word by word. For example, 
+       Given s = "the sky is blue", return "blue is sky the"
+       https://leetcode.com/problems/reverse-words-in-a-string/?tab=Description */
     void reverseWords(string &s) {
         int i, j,l, words,len;
         len = s.length();
@@ -91,12 +94,12 @@ class S {
             }
             //cout <<s<<"ONE"<<i<<j<<"\n";
             /* reverse each word */
-            reverseword(s,l,j-1);
+            reverse(s,l,j-1);
             words ++;
         }
         s.resize(j);
         /* Reverse entire sentence */
-        reverseword(s,0,j-1);
+        reverse(s,0,j-1);
     }
     /* reverse words in string there are no traling spaces and b/w words only one space*/
     void reverseWords1(string &s) {
@@ -105,7 +108,7 @@ class S {
         while (true) {
             while ((i<len) && (s[i] !=space)) 
                 i++;
-            reverseword(s,l,i-1);
+            reverse(s,l,i-1);
             l = i+1;
             words++;
             if (i==len)
@@ -113,7 +116,7 @@ class S {
             i++;
         }
         if (words)
-            reverseword(s,0,len-1);
+            reverse(s,0,len-1);
     }
     /* This Program finds largest subsequence without any character repetition in a string 
     Eg PRADEEPGOPANAPALLI Largest subsequence is 5 PRADE (0-4)
@@ -326,7 +329,7 @@ int findMaxHistArea(int H[],int W) {
 
 void start_stests(int argc, char *argv[]) {
     S res;
-    string s1 = "aabbcccdddeeffggggg";
+    string s1 = "abcdefg";
     string s2 = "A man a plan a canal: Panama";
     string s4;
     string s5 = "ana";
@@ -361,7 +364,7 @@ void start_stests(int argc, char *argv[]) {
 
     string s11 = "my name a is pradeep";
     printf("reversewords(%s) ",s11.c_str());
-    res.reverseWords1(s11);
+    res.reverseWords(s11);
     printf("====>(%s) \n ",s11.c_str());
 
 }
