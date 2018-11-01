@@ -118,6 +118,29 @@ class S {
         if (words)
             reverse(s,0,len-1);
     }
+    /* reverse Words of string with trailing or multiple spaces */
+    void reverseWords2(string &str) {
+        int s, e, words, len;
+        char space = ' ';
+        len = str.length();
+        s = 0, e =0, words =0;
+        while (str[e] != '\0') {
+            words = 0;
+            while (str[e] != '\0' && str[e] == space)
+                     e++;
+            if (str[e] == '\0')
+                break;
+            s = e;
+            while (str[e] != '\0' && str[e] != space) {
+                e++;
+                words = 1;
+            }
+            if (words)
+                reverse(str, s, e-1);
+        }
+        if (words)
+            reverse(str, 0, len-1);
+    }
     /* This Program finds largest subsequence without any character repetition in a string 
     Eg PRADEEPGOPANAPALLI Largest subsequence is 5 PRADE (0-4)
     Refer: 
