@@ -118,7 +118,7 @@ class S {
         if (words)
             reverse(s,0,len-1);
     }
-    /* reverse Words of string with trailing or multiple spaces */
+    /* reverse Words of string with trailing or multiple spaces in between this will preserve space in b/w*/
     void reverseWords2(string &str) {
         int s, e, words, len;
         char space = ' ';
@@ -138,8 +138,7 @@ class S {
             if (words)
                 reverse(str, s, e-1);
         }
-        if (words)
-            reverse(str, 0, len-1);
+	reverse(str, 0, len-1);
     }
     /* This Program finds largest subsequence without any character repetition in a string 
     Eg PRADEEPGOPANAPALLI Largest subsequence is 5 PRADE (0-4)
@@ -385,9 +384,9 @@ void start_stests(int argc, char *argv[]) {
     string s10 = "200";
     printf("multiply(%s,%s) ==> (%s)\n",s9.c_str(), s10.c_str(), multiplyStrings(s9,s10).c_str());
 
-    string s11 = "my name a is pradeep";
-    printf("reversewords(%s) ",s11.c_str());
-    res.reverseWords(s11);
+    string s11 = "This is code   testing";
+    printf("reversewords2(%s) ",s11.c_str());
+    res.reverseWords2(s11);
     printf("====>(%s) \n ",s11.c_str());
 
 }
