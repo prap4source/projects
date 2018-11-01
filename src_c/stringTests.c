@@ -53,7 +53,7 @@ char *multiplyStrings(char *num1, char *num2) {
         num3[i] += carry; 
     }
     int k = 0, t=0;
-    /* Leave one digit for zero */
+    /* remove zero's at startif any */
     while ((k < (len-1)) && (num3[k] == 0))
         k++; 
     
@@ -107,14 +107,15 @@ char* addStrings(char* num1, char* num2) {
     log("carry%d k%d size:%d) \n",carry, k, size);
     if (carry) {
         num3[k] = carry + '0';
-        
+        log ("num3(%s) size(%d)\n",num3, size);
         return num3;
     } else { /* readjust num3 */
-        char *num4 = calloc(1, size);
-        log ("k%d num3(%s) \n",num3, size);
+        char *num4 = calloc(1, size - 1);
+        log ("num3(%s) size:%d\n",num3, size-1);
         for (k=1;k<size;k++) {
             num4[k-1] = num3[k];
         }
+        log ("num3(%s) num4(%s)\n",num3, num4);
         free(num3);
         return num4;
     }

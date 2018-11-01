@@ -46,6 +46,7 @@ char *calc_md5(char *fileName);
 char *check_hash_for_md5(char *key);
 /* tests to run */
 char *multiplyStrings(char *n1, char *n2);
+char *addStrings(char *n1, char *n2);
 char findDifferene(char *s, char *t);
 int compareVersion(char *v1, char *v2);
 int myAtoi(char *str);

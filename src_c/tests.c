@@ -37,6 +37,13 @@ void start_test(int argc, char *argv[]) {
 				printf("mulitply(%s:%s) is %s \n", argv[3], argv[4], result);
 				free(result);
 			}
+	} else if ((strcmp(argv[2],"add") == 0) && (argc >= 5)) {
+			char *result = addStrings(argv[3], argv[4]);
+			log ("Test (%s:%s)", argv[3], argv[4]);
+			if (result) {
+				printf("addString of (%s:%s) is %s \n", argv[3], argv[4], result);
+				free(result);
+			}
 	} else if ((strcmp(argv[2],"finddiff") == 0) && (argc >= 5)) {
 			char result = findDifferene(argv[3], argv[4]);
 			log ("Test (%s:%s)", argv[3], argv[4]);
