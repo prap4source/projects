@@ -187,6 +187,22 @@ class S {
         return s;
     }
 
+    void convertTocurrency1(string &s) {
+	    int i , len;
+	    char comma = ',';
+	    len = s.length();
+
+	    if (len <= 3)
+		 return;
+
+	    i = (len -3);
+	    while (i > 0) {
+		    /* insert comma before ith position */
+		    s.insert(i, 1, comma);		    
+		    i = i - 3;
+	    }
+    }
+
 /* Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
 Examples: s = "leetcode" return 0. s = "loveleetcode", return 2 */
     int firstUniqChar(string s) {
@@ -370,11 +386,14 @@ void start_stests(int argc, char *argv[]) {
     cout <<s2 <<" [reverse] " <<res.reverseString(s2) <<"\n";
     cout <<s1 <<" [ChangeString] "<< res.changeString(s1) <<"\n";
     
-    string s3 = "45678900001";
-    for (int i =s3.size() - 2; i<s3.size() ; i++) {
+    string s3 = "456789000012345";
+    /* Iterate n times with incresing length */
+    for (int i = 1; i < s3.length(); i++) {
         s4.clear();
         s4.assign(s3 ,0,i);
-        cout <<s4 <<" [converttoCurrency] "<< res.convertTocurrency(s4) <<"\n";
+        cout <<s4 <<" [converttoCurrency] ";
+	res.convertTocurrency1(s4);
+        cout <<s4 << "\n";
     }
     string s8= "pradeepgopanapalli";
     printf("Largestsubsequence(%s) ==> (%d) \n",s8.c_str(), res.findLargeSS(s8));
