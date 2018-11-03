@@ -166,7 +166,9 @@ class S {
         return max_s;
   }
     /* This program converts given digits to currency format 
-    Eg: 1234555 to 1,234,555 (comma before every 3 digits*/
+    Eg: 1234555 to 1,234,555 (comma before every 3 digits 
+    Sentence = “This is a long sentence 123456789 and continues to be long 45678901” In this sentence place commas  after every 3 digits .
+Ex:  123456789 with 123,456,789 and 45678901 with 45,678,901 */
     string convertTocurrency(string s) {
         int N = s.size();
         int i = 1, start = 0;
