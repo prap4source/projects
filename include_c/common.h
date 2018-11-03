@@ -29,6 +29,7 @@
 #define MAX_SOCK_MSG 256
 
 #define SUCCESS 0
+typedef unsigned long int  ulong;
 /* Socket API's */
 func_def(server);
 func_def(client);

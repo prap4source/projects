@@ -4,6 +4,8 @@
  * else set(k, md5(k))
  */
 #include "common.h"
+#include "bitsops.h"
+
 char *check_hash_for_md5(char *key) {
      char *value = getHash(key);
      if (value != '\0')
@@ -16,6 +18,23 @@ char *check_hash_for_md5(char *key) {
 	 }
      }
      return (char *)NULL;
+}
+
+typedef struct my_priv_s {
+	void *addr;
+} my_priv;
+#define POLL_IN_PROGRESS 0x4
+
+/* (TBD)(INT_QUEST)  
+ * Design a polling function to check a adress (some address 0x12345) for a particular bit */
+int my_poll(void  *p) {
+   my_priv *priv = (my_priv *)p;
+   while (!my_test_bit(POLL_IN_PROGRESS, (ulong *)priv->addr)) {
+ 	//wait
+ 	//yeild
+	;;
+   }
+   return 0;
 }
 
 /* 
@@ -44,19 +63,3 @@ bool lookup (int key) {
 void delete(int key) {}
 */
 
-/* (TBD)(INT_QUEST)  Design a polling function to check a adress (some address 0x12345) for a particular bit
- * My solution
- * int my_poll(void *p) {
- *    nv_priv *priv = (nv_priv)p;
- *    while (!test_bit(NV_IN_PROCESS, &priv->flag)) {
- * 	//wait
- * 	//yeild
- *   }
- *   return SUCCESS;
- * }
- * bool test_bit(int bit, int flag) {
- * 	if ((flag & (1<<bit))
- * 		return true;
- * 	return false;
- * }
- */
