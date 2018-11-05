@@ -213,3 +213,30 @@ char* toLowerCase(char* str) {
     result[i] = '\0';
     return result;
 }
+#define MAX_ASCII 256
+/* Remove duplicates in a string */
+void removeDups(char *str) {
+	int len = strlen(str);
+	int hash[MAX_ASCII];
+	int i, j;
+
+	if (str == NULL || str[0] == '\0')
+		return;
+
+	for (i = 0; i < MAX_ASCII; i++)
+		hash[i] = -1;
+	i = j = 0;
+	while (i < len) {
+		if (hash[str[i]] != -1 ) { /*skip letter */
+			i++;
+		} else {
+			hash[str[i]] = i; /*save index */
+			str[j++] = str[i++];
+		}
+	}
+	if (j != len)
+		str[j] = '\0';
+}
+			
+
+

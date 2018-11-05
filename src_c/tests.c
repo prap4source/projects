@@ -44,6 +44,13 @@ void start_test(int argc, char *argv[]) {
 				printf("addString of (%s:%s) is %s \n", argv[3], argv[4], result);
 				free(result);
 			}
+	} else if ((strcmp(argv[2],"removeDups") == 0) && (argc >= 4)) {
+			char *before = malloc(strlen(argv[3]));
+			strcpy(before, argv[3]);
+			removeDups(argv[3]);
+			log ("Test (%s:%s)", before, argv[3]);
+			printf("removeDups of (%s) == %s \n", before, argv[3]);
+			free(before);
 	} else if ((strcmp(argv[2],"finddiff") == 0) && (argc >= 5)) {
 			char result = findDifferene(argv[3], argv[4]);
 			log ("Test (%s:%s)", argv[3], argv[4]);
