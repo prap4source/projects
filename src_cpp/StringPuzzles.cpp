@@ -140,6 +140,34 @@ class S {
         }
 	reverse(str, 0, len-1);
     }
+
+    void reverseS(char *start, char *end) {
+	while (start < end) {
+		char temp = *start;
+		*start = *end;
+		*end = temp;
+		start++;
+		end--;
+	}
+    }
+
+    /* Reverse words of sentence this will not take care of trailing or leading spaces */
+    void reverseWords3(char *A) {
+	char *start, *temp;
+	start = temp = A;
+
+	while (*temp) {
+		temp++;
+		if (*temp == '\0') {
+			reverseS(start, temp-1);
+		} else if (*temp == ' ') {
+			reverseS(start, temp-1);
+			start = temp + 1;
+		}
+	}
+	reverseS(A, temp-1);
+    }
+
     /* This Program finds largest subsequence without any character repetition in a string 
     Eg PRADEEPGOPANAPALLI Largest subsequence is 5 PRADE (0-4)
     Refer: 
@@ -410,4 +438,8 @@ void start_stests(int argc, char *argv[]) {
     res.reverseWords2(s11);
     printf("====>(%s) \n ",s11.c_str());
 
+    char s12[20] ="  ";
+    printf("reversewords2(%s) ",s12);
+    res.reverseWords3(s12);
+    printf("====>(%s) \n ",s12);
 }
