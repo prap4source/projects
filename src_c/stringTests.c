@@ -27,6 +27,30 @@ char findDifferene(char *s, char *t) {
     t_t += (t[i] - 'A');
     return (char )((t_t - s_t) +'A');
 }
+/* Find if s1 is subsequence of s2 
+ * Input: str1 = "AXY", str2 = "ADXCPY"
+ * Output: True (str1 is a subsequence of str2)
+ *
+ * Input: str1 = "AXY", str2 = "YADXCP"
+ * Output: False (str1 is not a subsequence of str2)
+ *
+ * Input: str1 = "gksrek", str2 = "geeksforgeeks"
+ * Output: True (str1 is a subsequence of str2)
+ */
+int isSubsequence(char s1[], char s2[]) {
+	char *str1 = s1;
+	char *str2 = s2;
+	while((*str1 != '\0') && (*str2 != '\0')) {
+		if (*str1 == *str2) {
+			str1++;
+			str2++;
+		} else 
+			str2++;
+	} 
+	if (*str1 == '\0')
+		return 1;
+	return 0;
+}
 
 /* Multiply integers represented as strings */
 char *multiplyStrings(char *num1, char *num2) {
