@@ -97,3 +97,30 @@ void rw_runlock(struct rwlock *lock) {
     else
         pthread_cond_broadcast(&lock->read_cv);
 }
+
+/* Fair lock also called ticket spinlocks 
+ * Waiter will increment a counter and will wait until counter value corresponds to its turn, 
+ * then it just needs to wait until that value appears. The result is called the ticket lock algorithm:
+ * https://locklessinc.com/articles/locks/
+ * https://nahratzah.wordpress.com/2012/10/12/a-trivial-fair-spinlock/
+ */
+typedef unsigned int uint;
+#define atomic_add(P, V) __sync_fetch_and_add(P, V)
+#define atomic_read(P) (*P)
+
+typedef struct ticketlock_s{
+	uint ticket;
+	uint users;
+} ticketlock;
+
+void ticket_lock(ticketlock *lock) {
+	uint my_ticket = atomic_add(&lock->users, 1);
+
+	while (atomic_read(&lock->ticket) != my_ticket)
+		cpu_relax();
+}
+
+void ticket_unlock(ticketlock *lock) {
+	barrier();
+	atomic_add(&lock->ticket, 1);
+}
