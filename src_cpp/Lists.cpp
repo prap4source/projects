@@ -256,9 +256,26 @@ ListNode* reverseKGroup(ListNode* head, int k) {
         return head;        
 }
 
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-  Node *tf = reverse(l1);
-  Node *ts = reverse(l2);
+static void PrintList(ListNode *head) {
+    ListNode *temp = head;
+    cout <<"[";
+    while (temp != NULL) {
+        cout << temp->data <<",";
+        temp = temp->next;
+    }
+    cout <<"]\n";
+}
+
+/* 
+A and B are Linked Lists with numbers , add these numbers and put in another Linked List
+A 1->2->3
+B  4 --> 5 --> 6
+c-> 5 7 9
+321 + 654 =  975 
+*/
+ListNode* addTwoListsReverse(ListNode* l1, ListNode* l2) {
+  Node *tf = l1;
+  Node *ts = l2;
   Node dummy;
   Node *result = &dummy;
   int carry =0,sum=0;
@@ -277,6 +294,44 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
       carry = sum/10;
       result = result->next;
   }
+  
+  return ((dummy.next));
+}
+
+/* Add numbers as it 
+ * A  1 --> 2 --> 3 
+B  4 --> 5 --> 6
+C  5 --> 7 --> 9
+* If Lists are read only use following methods
+* [a) Using stack and putting numbers into stack b) Using recursion]
+*/
+ListNode* addTwoListForward(ListNode** l1, ListNode** l2) {
+  Node *lt1 = reverse(*l1);
+  Node *lt2 = reverse(*l2);
+  Node *tf = lt1; 
+  Node *ts = lt2;
+  
+  Node dummy;
+  Node *result = &dummy;
+  int carry =0,sum=0;
+  
+  while (tf ||  ts || carry) {
+      sum  = carry;
+      if (tf) {
+        sum += tf->data;
+        tf = tf->next;
+      }
+       if (ts) {
+        sum += ts->data;
+        ts = ts->next;
+       }
+      result->next = new Node(sum % 10);
+      carry = sum/10;
+      result = result->next;
+      }
+  
+  *l1 = reverse(lt1);
+  *l2 = reverse(lt2);
   return (reverse(dummy.next));
 }
 
@@ -602,6 +657,8 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
         }
         return head;
 }
+
+
 ListNode* mergeSameElements(ListNode *l1, ListNode *l2) {
     ListNode dummy;
     ListNode *newList = &dummy;
@@ -643,12 +700,24 @@ void  toMath() {
     /* Palindrome */
     isPalindrome(first.head);
     
+    
     /* Add Two numbers */
+    mList.head = addTwoListsReverse(first.head, second.head);
+    cout <<"Added two Lists Reverse of First and Second \n";
+    mList.PrintList();
+    
+    mList.head = addTwoListForward(&first.head, &second.head);
+    cout <<"Added two Lists Forward of First and Second \n";
+    mList.PrintList();
+        
+    cout <<"Final List \n";
+    first.PrintList();
+    second.PrintList();
+    third.PrintList();
+    
     mList.head = mergeSameElements(first.head, second.head);
     mList.PrintList();
-    /* Add Two numbers */
-    mList.head = addTwoNumbers(first.head, second.head);
-    mList.PrintList();
+    
    
 }
 
@@ -685,6 +754,7 @@ void start_slist(int argc, char *argv[]) {
     vec.push_back(first.head);
     vec.push_back(second.head);
     vec.push_back(third.head);
+    toMath();
 #if 0
     mList.head = mergeKLists(vec);
     mList.PrintList();

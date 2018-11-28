@@ -143,20 +143,21 @@ int findFibN(int n) {
    (smaller than x) before x, and put all greater elements (greater than x) after x. 
    All this should be done in linear time. */
 int partition(int arr[], int low, int high) {
-	int pivot, i, j;
-	pivot = arr[high];
-	i = (low-1); /* Index of smaller element*/
+	int pivot, small, j;
+	pivot = arr[high]; /* select high as pivot, there are other ways to do this */
+	small = (low-1); /* Index of smaller element*/
 	for (j = low; j < high; j++) {
 		if (arr[j] <= pivot) { /* if current element is smaller then pivot*/
-			i++; /* Increment index of smaller element */
-			if (i != j) /* optimizimation */
-			  swap(arr[i], arr[j]);
+			++small; /* Increment index of smaller element */
+			if (small != j) /* optimizimation */
+			  swap(arr[small], arr[j]);
 		}
 	}
-	if (i != (high-1)) /* optimizimation */
-	    swap(arr[i+1], arr[high]);
+	++small;
+	if (small != (high)) /* optimizimation */
+	    swap(arr[small], arr[high]);
 
-	return (i+1);
+	return (small);
 }
 /* Quick sort time complexity o(nlogn) and Doesnt require any extra space
    https://www.geeksforgeeks.org/quick-sort/ 
