@@ -12,22 +12,6 @@ class SingleTree {
     public:
         Treep root;
         SingleTree() { root = NULL; }
-    /* Validate if tree is bst or not  Preserve last two node values and compare */
-    int isValidBST(TreeNode *node, long long min, long long max) {
-        if (node == NULL)
-            return 0;
-        //printf("side%d p%d c%d \n",side, parent->val, child->val);
-        if (node->val <= min || node->val >=max)
-            return 1;
-        return (isValidBST(node->left, min, node->val) || isValidBST(node->right,node->val,max));
-    }
-    bool isValidBST(TreeNode* root) {
-        if ((root == NULL) || (!root->left && !root->right)) 
-                return true;
-        long long min = LLONG_MIN, max = LLONG_MAX;
-        return ((isValidBST(root->left, min, root->val) || isValidBST(root->right, root->val, max )) ? false:true);
-        
-    }
 };
 /* count nodes in complete balanaced tree */
 int countNodes(TreeNode* root) {
@@ -47,7 +31,23 @@ int countNodes(TreeNode* root) {
         if (lh == rh)
             return pow(2,lh)-1;
         return 1 + countNodes(root->left) + countNodes(root->right);
-    }
+}
+/* Validate if tree is bst or not,At node compare it with max and minimum, 
+ * child nodes will get new max and min from parent 
+ * based on left or right  */
+int isValidBSTUtil(TreeNode *node, int min, int max) {
+	if (node == NULL)
+		return 0;
+	if (node->val <= min || node->val >=max)
+		return 1;
+	/* Left nodes should be less than node->val and right nodes should be greater than node->val */
+	return (isValidBSTUtil(node->left, min, node->val) && isValidBSTUtil(node->right,node->val,max));
+}
+bool isValidBST(TreeNode* root) {
+	int min = INT_MIN, max = INT_MAX;
+	return (isValidBSTUtil(root, min, max));
+}
+
 /* Build Balanced level tree from array */
 void buildTreeLevelOrder(queue<Treep> &q, int arr[], int size) 
 {
