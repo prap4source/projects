@@ -41,7 +41,7 @@ int isValidBSTUtil(TreeNode *node, int min, int max) {
 	if (node->val <= min || node->val >=max)
 		return 1;
 	/* Left nodes should be less than node->val and right nodes should be greater than node->val */
-	return (isValidBSTUtil(node->left, min, node->val) && isValidBSTUtil(node->right,node->val,max));
+	return (isValidBSTUtil(node->left, min, node->val) && isValidBST(node->right,node->val,max));
 }
 bool isValidBST(TreeNode* root) {
 	int min = INT_MIN, max = INT_MAX;
