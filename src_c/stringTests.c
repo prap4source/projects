@@ -4,6 +4,13 @@
 #include "common.h"
 #include "operations.h"
 
+char *tests[ROW_MAX][COL_MAX] = {{"multiply", "Multiplies two strings pass two strings"},
+		    {"add", "adds two strings pass two strings"},
+		    {"removeDups", "remove duplicates in a string pass one string"},
+		    {"finddiff", "find diff between two strings pass two strings"},
+		    {"compvers", "compare two strings as version pass two strings"},
+		    {"atoi", "convert string to integer pass one string"}
+		    };
 /* (TBD)(INT_QUEST)https://www.careercup.com/question?id=14424684 */
 char *read4k(char *buf, int num) {
 	return NULL;
@@ -340,12 +347,20 @@ void removeDups(char *str) {
 	if (j != len)
 		str[j] = '\0';
 }
+void usage(int argc, char *argv[]) {
+	for (int row=0; row < (sizeof(tests)/sizeof(tests[0])); row++) {
+		if (tests[row][0] == NULL)
+			break;
+		log_err("Usage: <%s %s %s <args>> \"description of test: %s\""
+				,argv[0], argv[1], tests[row][0], tests[row][1]);
+	}
+}
 			
 void start_stringtest(int argc, char *argv[]) {
 	log ("num of arguments %d",argc);
 	
 	if (argc <= 3) {
-		log_err("Usage: <stringtests> <arg>");
+		usage(argc, argv);
 		return ;
 	}
 	
@@ -383,6 +398,6 @@ void start_stringtest(int argc, char *argv[]) {
 		       int result = myAtoi(argv[3]);
 		       printf ("atoi(%s) == %d \n", argv[3], result);
 	} else {
-		log_err("Usage: <tests> <>");
+		usage(argc, argv);
 	}
 }

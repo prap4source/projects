@@ -10,6 +10,9 @@
 
 
 void generic() {
+	char a[10] = {1,2,3};
+	printf("%ld: %ld \n", sizeof(a), strlen(a));
+#if 0
 	for (int i =1; i<=4;i++) {
 		/* In a system with 4 GB RAM we can allocate upto 2^32 virtual memory
 		 * in 8 GB upto 2^33 and so on */			
@@ -19,15 +22,11 @@ void generic() {
 		set_bit(35, (ulong *)addr);
 		free(addr);
 	}
+#endif
 }
 
 void start_test(int argc, char *argv[]) {
 	log ("num of arguments %d",argc);
-	
-	if (argc <= 3) {
-		log_err("Usage: <tests> <arg>");
-		return ;
-	}
 	
 	if (strcmp(argv[2], "generic") == 0) {
 		generic();

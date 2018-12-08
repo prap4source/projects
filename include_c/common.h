@@ -27,6 +27,8 @@
 #define MAX_HASH 10
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256
+#define ROW_MAX 20
+#define COL_MAX 20
 /* Common functions */
 int myatoi(char *str);
 
