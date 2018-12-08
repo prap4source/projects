@@ -105,16 +105,18 @@ In every iteration of selection sort, the minimum element (considering ascending
 o(n^2) space o(1)
 https://www.geeksforgeeks.org/selection-sort/
 */
-void selectionsort(int a[], int size) {
+int selectionsort(int a[], int size) {
 	int i, j;
 	for (i=0; i<size-1; i++) {
 		int min_idx = i;
-		for (j=1; j < size ;j++) {
+		for (j=i; j < size ;j++) {
 			if (a[j] < a[min_idx]) 
 				min_idx = j;
 		}
+		log("i:%d a[i]:%d min:%d\n",i, a[i], min_idx);
 		swap(a[i], a[min_idx]);
 	}
+	return 0;
 }
 
 /* Find maximux in an array*/
@@ -207,10 +209,10 @@ typedef struct testToRun {
 
 /* testRun tests[] will be used for invoking corresponding tests */
 static testRun tests[] = {{"duplicates", 1, printDuplicates, NULL, "Print Duplicates in A[]"},
-	           {"minSlide", 2, NULL, findMinSlideSize, "find minimum slide in A[] with slide size n"},
 		   {"findSlot", 1, findSlots, NULL, "Movie theatre slot problem"},
-		   //{"prepArray", 2,  NULL, prepArray, "convert string to Array"},
-		   {"findMax", 1, findMaxinArray, NULL, "Find Maximum in an Array"}
+		   {"findMax", 1, findMaxinArray, NULL, "Find Maximum in an Array"},
+		   {"selectionsort", 1, selectionsort, NULL, "Sort Array using selection sort"},
+	           {"minSlide", 2, NULL, findMinSlideSize, "find minimum slide in A[] with slide size n"}
 		   };
 
 /* Usage function */
@@ -252,7 +254,9 @@ void start_arraytest(int argc, char *argv[]) {
 					result = (*ptr->func1)(arr, m);
 				else
 					result = (*ptr->func2)(arr, m, myAtoi(argv[4]));
-				printf("%s() str:%s result:%d \n", ptr->testType, argv[3], result);
+				printf("[%s] %s()===> (result:%d, Array:[ ", argv[3], ptr->testType, result);
+				for(int i = 0; i < m; i++)
+					printf("%d%s",arr[i], (i < m-1) ? ", ":" ]\n");
 			} else
 				log_err("Unable to execute m=%d",m);
 
