@@ -13,25 +13,6 @@ int findMaxinArray(int *arr, int len) {
 	}
 	return (max_no);
 }
-/** Find duplicates in a array using bitmask INT_QUEST
- *Use bitmask where each bit represents number 
- *TBD:Optimize this to decrease size of bitmask
- **/
-void printDuplicates(int *arr, int len) {
-	int i;
-	int max = findMaxinArray(arr, len);
-	int alloc = ((max/8)*sizeof(char)) + 1;
-	int *bitmask = malloc(alloc);
-	*bitmask =0;
-	log ("max(%d) len(%d) alloc(%d)", max, len, alloc);
-	for (i=0;i<len; i++) {
-		if (*(bitmask) & (1<<arr[i]))
-			printf("%d repeated \n", arr[i]);
-		else 
-		    *(bitmask) |= (1<<arr[i]);
-	}
-	free(bitmask);
-}
 
 /* reverse a integer x and return reversed value */
 int reverseInt(int x) {
@@ -48,50 +29,7 @@ int reverseInt(int x) {
     return y;
 }
 
-/**  Find minimum sliding window size (INT_QUEST)
- * e.g. array[7] ={ 1, 0, -1, 2, 1, 0, -2 } ,swSize = 3
- * Windows ===> { 1, 0, -1 } = 0 { 0, -1, 2} = 1 { -1, 2, 1} = 2 { 2, 1, 0} = 3 {1, 0, -2} = -1
- * m >= swSize*2
- */
-int findMinSlideSize(int arr[], int m, int swSize) {
-      int min_size=INT_MAX;
-      int curr_size = 0, i;
-      for (i = 0; i < swSize;i++) 
-	    curr_size += arr[i];
-      min_size = min(min_size, curr_size);
-      for (i = swSize;i < m; i++) {
-              curr_size -= arr[i-swSize];
-	      curr_size += arr[i];
-	      min_size = min(curr_size, min_size);
-     }
-     
-     return (min_size);
-}
 
-/* Find number of slots remaining in a theatre row, you can't place no 
- * two people next to each other
-   Eg: [100000111] is input data->output is "2" as you seat two people
-   like[101010111]
-   Eg: 1010101000 -> 1010101010 ====> 1 person
-   Eg: 0001010001 -> 0101010101 ====> 2 person
-*/
-
-int findSlots(int a[] ,int size) {
-	int slot = 0;
-	int i=1;
-	while (i < size) {
-	  if (a[i]) {
-	    i++;
-	  } else {
-	    if (!a[i-1] && (i<size && !a[i+1])) {
-		slot++;
-		i++;
-	    }
-	  }
-	  i++;
-	}
-	return slot;
-}
 /* Find fibannoci series using Memorization method ,Dynammic programming method 1 
  Memoization (Top Down): The memoized program for a problem is similar to the recursive 
  version with a small modification that it looks into a lookup table before computing 
@@ -196,36 +134,166 @@ void selectionsort(int a[], int size) {
 	}
 }
 
-void printwithput(int val) {
+/**  Find minimum sliding window size (INT_QUEST)
+ * e.g. array[7] ={ 1, 0, -1, 2, 1, 0, -2 } ,swSize = 3
+ * Windows ===> { 1, 0, -1 } = 0 { 0, -1, 2} = 1 { -1, 2, 1} = 2 { 2, 1, 0} = 3 {1, 0, -2} = -1
+ * m >= swSize*2
+ */
+int findMinSlideSizeHelper(int arr[], int m, int swSize) {
+      int min_size=INT_MAX;
+      int curr_size = 0, i;
+      for (i = 0; i < swSize;i++) 
+	    curr_size += arr[i];
+      min_size = min(min_size, curr_size);
+      for (i = swSize;i < m; i++) {
+              curr_size -= arr[i-swSize];
+	      curr_size += arr[i];
+	      min_size = min(curr_size, min_size);
+     }
+     
+     return (min_size);
+}
+int findMinSlideSize(char *str, int n) {
+	/* TBD parse A and convert as Array */
+	int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+	int m = sizeof(a)/sizeof(a[0]);
+
+	printf("Minimum slide size is %d\n",findMinSlideSizeHelper(a, m, n));
+
+	return 0;
+}
+
+/* Find number of slots remaining in a theatre row, you can't place no 
+ * two people next to each other
+   Eg: [100000111] is input data->output is "2" as you seat two people
+   like[101010111]
+   Eg: 1010101000 -> 1010101010 ====> 1 person
+   Eg: 0001010001 -> 0101010101 ====> 2 person
+*/
+int findSlotsHelper(int a[] ,int size) {
+	int slot = 0;
+	int i=1;
+	while (i < size) {
+	  if (a[i]) {
+	    i++;
+	  } else {
+	    if (!a[i-1] && (i<size && !a[i+1])) {
+		slot++;
+		i++;
+	    }
+	  }
+	  i++;
+	}
+	return slot;
+}
+int findSlots(char *str) {
+	/* TBD parse A and convert as Array */
+	int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+	int m = sizeof(a)/sizeof(a[0]);
+	printf("Number of people to fill %d\n",findSlotsHelper(a, m));
+
+	return 0;
+}
+
+/** Find duplicates in a array using bitmask INT_QUEST
+ *Use bitmask where each bit represents number 
+ *TBD:Optimize this to decrease size of bitmask
+ **/
+void printDuplicatesHelper(int *arr, int len) {
+	int i;
+	int max = findMaxinArray(arr, len);
+	int alloc = ((max/8)*sizeof(char)) + 1;
+	int *bitmask = malloc(alloc);
+	*bitmask =0;
+	log ("max(%d) len(%d) alloc(%d)", max, len, alloc);
+	for (i=0;i<len; i++) {
+		if (*(bitmask) & (1<<arr[i]))
+			printf("%d repeated \n", arr[i]);
+		else 
+		    *(bitmask) |= (1<<arr[i]);
+	}
+	free(bitmask);
+}
+int printDuplicates(char *str) {
+	/* TBD parse A and convert as Array */
+	int a[] = {1, 2, 3, 4, 1, 5, 7, 7, 4};
+	int m = sizeof(a)/sizeof(a[0]);
+	printDuplicatesHelper(a, m);
+
+	return 0;
+}
+
+/* Print val without using print and using put */
+void printwithputHelper(int val) {
 	int rem;
 	if (val) {
 		rem = val %10;
-		printwithput(val/10);
+		printwithputHelper(val/10);
 		putc(rem + '0', stdout);
 	} 
 }
+int printwithput(char *str) {
 
+	printwithputHelper(myAtoi(str));
+	return 0;
+}
+
+/* Wrappers for testType -> function */
+typedef int (*fptr1) (char *str);
+typedef int (*fptr2) (char *str, int len);
+typedef struct testToRun {
+	char *testType;
+	int params;
+	fptr1 func1;
+	fptr2 func2;
+	char *descr;
+}testRun;
+
+/* testRun tests[] will be used for invoking corresponding tests */
+static testRun tests[] = {{"duplicates", 1, printDuplicates, NULL, "Print Duplicates in A[]"},
+	           {"minSlide", 2, NULL, findMinSlideSize, "find minimum slide in A[] with slide size n"},
+		   {"putPrint", 1, printwithput, NULL, "Print n using put"},
+		   {"findSlot", 1, findSlots, NULL, "Movie theatre slot problem"}
+		   };
+
+/* Usage function */
+static inline void usage(int argc, char *argv[]) {
+	testRun *ptr;
+	int size = (sizeof(tests) / sizeof(tests[0]));
+	for (ptr = tests; ptr != tests + size; ptr++)
+		log_err("usage(): %s %s %s <%d arguments> ,description:%s",
+			  argv[0], argv[1], ptr->testType, ptr->params, ptr->descr);
+}
+
+/* Starting point of Array tests*/
 void start_arraytest(int argc, char *argv[]) {
 	log ("num of arguments %d",argc);
 	
 	if (argc <= 3) {
-		log_err("Usage: <arraytests> <arg>");
+		usage(argc, argv);
 		return ;
+	} 
+
+	bool not_found = true;
+	testRun *ptr;
+	int tests_size = sizeof(tests) / sizeof(tests[0]) ;
+	for (ptr = tests; ptr != tests + tests_size; ptr++) {
+		int params = argc - ptr->params;
+		if (strcmp(argv[2], ptr->testType) == 0) {
+			/* If it has two parameters */
+			if ((argc - ptr->params - 3) != 0)
+			    break;
+			not_found = false;
+			if (ptr->params == 1)
+				(*ptr->func1)(argv[3]);
+			else
+				(*ptr->func2)(argv[3], myAtoi(argv[4]));
+		}
+
 	}
-	
-	if (strcmp(argv[2], "array") == 0) {
-			int a[] = {1, 0, -1, 2, 1, 3, -2, -3, 0};
-			int m = sizeof(a)/sizeof(a[0]);
-			printDuplicates(a, m);
-			printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
-	} else if (strcmp(argv[2], "putc") == 0) {
-		printf("print element %s in putc \n",argv[3]);
-		printwithput(myAtoi(argv[3])); 
-	} else if (strcmp(argv[2], "theatre") == 0) {
-		int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-		int m = sizeof(a)/sizeof(a[0]);
-		printf("Number of people to fill %d\n",findSlots(a, m));
-	} else {
-		log_err("Usage: <arraytests> <args>");
+
+	if (not_found) {
+		usage(argc, argv);
+		return;
 	}
 }

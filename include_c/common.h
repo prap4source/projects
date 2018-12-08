@@ -39,7 +39,7 @@
 typedef unsigned long int  ulong;
 
 /* Common functions */
-int myatoi(char *str);
+int myAtoi(char *str);
 
 /* Socket API's */
 func_def(server);
