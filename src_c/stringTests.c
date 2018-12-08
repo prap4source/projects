@@ -116,9 +116,10 @@ int findDifference(char *s, char *t) {
  * Input: str1 = "gksrek", str2 = "geeksforgeeks"
  * Output: True (str1 is a subsequence of str2)
  */
-int isSubsequence(char s1[], char s2[]) {
+int isSubsequence(char *s1, char *s2) {
 	char *str1 = s1;
 	char *str2 = s2;
+	bool isSub = 0;
 	while((*str1 != '\0') && (*str2 != '\0')) {
 		if (*str1 == *str2) {
 			str1++;
@@ -126,8 +127,10 @@ int isSubsequence(char s1[], char s2[]) {
 		} else 
 			str2++;
 	} 
-	if (*str1 == '\0')
-		return 1;
+	if (*str1 == '\0') 
+		isSub = 1;
+	printf("%s is %s of %s \n", 
+		s1, (isSub) ? "subsequence": "not subsequence", s2);
 	return 0;
 }
 
@@ -169,7 +172,6 @@ char *multiplyStringsHelper(char *num1, char *num2) {
 
     return ans;
 }
-
 int multiplyStrings(char *str1, char *str2){
 	char *result;
 
@@ -188,7 +190,6 @@ int multiplyStrings(char *str1, char *str2){
     Both num1 and num2 contains only digits 0-9. Both num1 and num2 does not contain any leading zero.
     You must not use any built-in BigInteger library or convert the inputs to integer directly.
     Logic: Start from end of the strings and add digits */
-
 char* addStringsHelper(char* num1, char* num2) {
     char *num3;
     int l1 = strlen(num1);
@@ -236,7 +237,6 @@ char* addStringsHelper(char* num1, char* num2) {
         return num4;
     }
 }
-
 int addStrings(char *str1, char *str2){
 	char *result = addStringsHelper(str1, str2);
 	log ("Test (%s:%s)", str1, str2);
@@ -275,6 +275,7 @@ int compareVersion(char* version1, char* version2) {
     
     return 0;
 }
+
 /* atoi function convert string to integer 
  https://leetcode.com/problems/string-to-integer-atoi/#/description
  */
@@ -323,8 +324,7 @@ https://leetcode.com/submissions/detail/180709866/
 Input: "Hello"
 Output: "hello"
 */
-
-char* toLowerCase(char* str) {
+char* toLowerCaseHelper(char* str) {
     int len = strlen(str);
     int i = 0;
     char *result = malloc(len * sizeof(char));
@@ -341,6 +341,14 @@ char* toLowerCase(char* str) {
     }
     result[i] = '\0';
     return result;
+}
+int toLowerCase(char *str) {
+	char *result = toLowerCaseHelper(str);
+	if (result) {
+		printf("lowerCase of (%s) is %s \n", str, result);
+		free(result);
+	}
+	return 0;
 }
 
 /* Remove duplicates in a string Eg: "1234555" result-> "12345"*/
@@ -384,15 +392,18 @@ typedef struct testToRun {
 	int params;
 	fptr1 func1;
 	fptr2 func2;
+	char *descr;
 }testRun;
 
 /* testRun tests[] will be used for invoking corresponding tests */
-testRun tests[] = {{"multiply", 2, NULL, multiplyStrings},
-	           {"add", 2, NULL, addStrings},
-	           {"finddiff", 2, NULL, findDifference},
-	           {"compvers", 2, NULL, compareVersion},
-		   {"removeDups", 1, removeDups, NULL},
-		   {"atoi", 1, myAtoi, NULL}
+testRun tests[] = {{"multiply", 2, NULL, multiplyStrings, "Multiply s1 with s2"},
+	           {"add", 2, NULL, addStrings, "Add s1 and s2"},
+	           {"finddiff", 2, NULL, findDifference, "find difference of s1 and s2"},
+	           {"compvers", 2, NULL, compareVersion, "compare s1 and s2"},
+	           {"isSubseq", 2, NULL, isSubsequence, "is s1 subsequence of s2"},
+		   {"removeDups", 1, removeDups, NULL, "remove duplicates in s"},
+		   {"atoi", 1, myAtoi, NULL, "convert string s into integer"},
+		   {"tolower", 1, toLowerCase, NULL, "convert Uppercases in s to lowerCase"}
 		   };
 
 /* Usage function */
@@ -400,8 +411,8 @@ static inline void usage(int argc, char *argv[]) {
 	testRun *ptr;
 	int size = (sizeof(tests) / sizeof(tests[0]));
 	for (ptr = tests; ptr != tests + size; ptr++)
-		log_err("usage(): %s %s %s <%d arguments>",
-			  argv[0], argv[1], ptr->testType, ptr->params);
+		log_err("usage(): %s %s %s <%d arguments> ,description:%s",
+			  argv[0], argv[1], ptr->testType, ptr->params, ptr->descr);
 }
 
 /* Starting point of string tests*/
