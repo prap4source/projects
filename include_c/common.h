@@ -35,6 +35,7 @@
 #define COL_MAX 20
 #define SUCCESS 0
 #define MAX_ASCII 256
+#define MAX_ELEMENTS 2000
 
 typedef unsigned long int  ulong;
 

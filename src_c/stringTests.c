@@ -311,7 +311,7 @@ int myAtoi(char* str) {
     
     }
 
-    printf ("atoi(%s) result = %d \n", str, (sign * sum));
+    //printf ("atoi(%s) result = %d \n", str, (sign * sum));
     return (sign * sum);
 }
 

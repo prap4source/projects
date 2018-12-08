@@ -134,6 +134,59 @@ void selectionsort(int a[], int size) {
 	}
 }
 
+/* convert string to array */
+int *prepArrayHelper(char *str, int *len) {
+	/* Caller will free memory */
+	int *A = malloc(sizeof(int) * MAX_ELEMENTS);
+	char *p = str;
+	int size = 0, n = 0;
+	char tmp[200000];
+
+	if (A == NULL) {
+		*len = 0;
+		return NULL;
+	}
+
+	while ((*p != '\0') && (n < MAX_ELEMENTS)) {
+		if (*p == ',') {
+			A[n] = myAtoi(tmp);
+			log ("n=%d A[n]=%d tmp=%s ", n, A[n], tmp);
+			n++;
+			memset(tmp, 0, size);
+			size = 0;
+
+		} else {
+			log ("size=%d *p=%c ", size, *p);
+		        tmp[size++] = *p;
+		}
+		p++;
+		/* Fill last element */
+		if (*p == '\0') 
+			A[n++] = myAtoi(tmp);
+	}
+
+
+	if (n == MAX_ELEMENTS) {
+		*len = 0;
+	} else {
+		*len = n;
+	}
+
+	return A;
+}
+int prepArray(char *str, int n) {
+	int *tmp;
+	int len = 0;
+	
+	printf("n=%d, str=%s \n", n, str);
+	tmp = prepArrayHelper(str, &len);
+	for (int i = 0; i < len; i++)
+		printf("i=%d, element=%d \n",i, tmp[i]);
+        
+	free(tmp);
+	return 0;
+}
+
 /**  Find minimum sliding window size (INT_QUEST)
  * e.g. array[7] ={ 1, 0, -1, 2, 1, 0, -2 } ,swSize = 3
  * Windows ===> { 1, 0, -1 } = 0 { 0, -1, 2} = 1 { -1, 2, 1} = 2 { 2, 1, 0} = 3 {1, 0, -2} = -1
@@ -154,12 +207,15 @@ int findMinSlideSizeHelper(int arr[], int m, int swSize) {
      return (min_size);
 }
 int findMinSlideSize(char *str, int n) {
-	/* TBD parse A and convert as Array */
-	int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-	int m = sizeof(a)/sizeof(a[0]);
+	int *a, m = 0;
 
-	printf("Minimum slide size is %d\n",findMinSlideSizeHelper(a, m, n));
+	a = prepArrayHelper(str, &m);
+	if (m)
+		printf("Minimum slide size is %d\n",findMinSlideSizeHelper(a, m, n));
+	else
+		log_err("Unable to execute m=%d",m);
 
+	free(a);
 	return 0;
 }
 
@@ -187,11 +243,15 @@ int findSlotsHelper(int a[] ,int size) {
 	return slot;
 }
 int findSlots(char *str) {
-	/* TBD parse A and convert as Array */
-	int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
-	int m = sizeof(a)/sizeof(a[0]);
-	printf("Number of people to fill %d\n",findSlotsHelper(a, m));
+	int *a, m =0;
 
+	a = prepArrayHelper(str, &m);
+	if (m)
+		printf("Number of people to fill %d\n",findSlotsHelper(a, m));
+	else
+		log_err("Unable to execute m=%d",m);
+
+	free(a);
 	return 0;
 }
 
@@ -215,11 +275,16 @@ void printDuplicatesHelper(int *arr, int len) {
 	free(bitmask);
 }
 int printDuplicates(char *str) {
-	/* TBD parse A and convert as Array */
-	int a[] = {1, 2, 3, 4, 1, 5, 7, 7, 4};
-	int m = sizeof(a)/sizeof(a[0]);
-	printDuplicatesHelper(a, m);
+	int *a;
+	int m =0;
 
+	a = prepArrayHelper(str, &m);
+	if (m)
+		printDuplicatesHelper(a, m);
+	else
+		log_err("Unable to execute m=%d",m);
+
+	free(a);
 	return 0;
 }
 
@@ -239,6 +304,9 @@ int printwithput(char *str) {
 	return 0;
 }
 
+
+
+
 /* Wrappers for testType -> function */
 typedef int (*fptr1) (char *str);
 typedef int (*fptr2) (char *str, int len);
@@ -254,7 +322,8 @@ typedef struct testToRun {
 static testRun tests[] = {{"duplicates", 1, printDuplicates, NULL, "Print Duplicates in A[]"},
 	           {"minSlide", 2, NULL, findMinSlideSize, "find minimum slide in A[] with slide size n"},
 		   {"putPrint", 1, printwithput, NULL, "Print n using put"},
-		   {"findSlot", 1, findSlots, NULL, "Movie theatre slot problem"}
+		   {"findSlot", 1, findSlots, NULL, "Movie theatre slot problem"},
+		   {"prepArray", 2, NULL, prepArray, "convert string to Array"}
 		   };
 
 /* Usage function */
