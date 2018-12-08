@@ -235,6 +235,7 @@ void printwithputHelper(int val) {
 int printwithput(char *str) {
 
 	printwithputHelper(myAtoi(str));
+	printf("\n");
 	return 0;
 }
 

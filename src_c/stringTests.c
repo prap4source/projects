@@ -312,7 +312,7 @@ int myAtoi(char* str) {
     }
 
     printf ("atoi(%s) result = %d \n", str, (sign * sum));
-    return (0);
+    return (sign * sum);
 }
 
 char isUpper(char s) {
