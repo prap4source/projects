@@ -6,74 +6,57 @@
 #include "common.h"
 #include "operations.h"
 
-int findMaxinArray(int *arr, int len) {
-	int max_no = arr[0], i;
-	for (i=1; i < len ;i++) {
-		max_no = max(max_no, arr[i]);
+/* convert string to array */
+int *prepArrayHelper(char *str, int *len) {
+	/* Caller will free memory */
+	int *A = malloc(sizeof(int) * MAX_ELEMENTS);
+	char *p = str;
+	int size = 0, n = 0;
+	char tmp[200000];
+
+	if (A == NULL) {
+		*len = 0;
+		return NULL;
 	}
-	return (max_no);
-}
 
-/* reverse a integer x and return reversed value */
-int reverseInt(int x) {
-    int y = 0;
-    while (x) {
-        int temp = y;
-        y = (x %10) + y *10;
-        x = x /10;
-        if (y/10 != temp) { /* Check for underflow or overflow */
-        	printf("underflow/overflow returning zero(%d:%d) \n",temp, y/10);    
-                return 0;
-        }
-    }
-    return y;
-}
+	while ((*p != '\0') && (n < MAX_ELEMENTS)) {
+		if (*p == ',') {
+			A[n] = myAtoi(tmp);
+			log ("n=%d A[n]=%d tmp=%s ", n, A[n], tmp);
+			n++;
+			memset(tmp, 0, size);
+			size = 0;
+
+		} else {
+			log ("size=%d *p=%c ", size, *p);
+		        tmp[size++] = *p;
+		}
+		p++;
+		/* Fill last element */
+		if (*p == '\0') 
+			A[n++] = myAtoi(tmp);
+	}
 
 
-/* Find fibannoci series using Memorization method ,Dynammic programming method 1 
- Memoization (Top Down): The memoized program for a problem is similar to the recursive 
- version with a small modification that it looks into a lookup table before computing 
- solutions. We initialize a lookup array with all initial values as NIL. Whenever we 
- need the solution to a subproblem, we first look into the lookup table. If the 
- precomputed value is there then we return that value, otherwise, 
- we calculate the value and put the result in the lookup table so that it can be reused later.*/
-#define MAX 255
-int f[MAX];
-int fibN(int n) {
-    if (f[n] == -1) {
-        if (n <= 1)
-           f[n] = n;
-        else
-            f[n] = fibN(n-1) + fibN(n-2);
-    }
-    
-    return f[n];
+	if (n == MAX_ELEMENTS) {
+		*len = 0;
+	} else {
+		*len = n;
+	}
+
+	return A;
 }
-int findfibN(int n) {
-    int val;
-    if (n >= MAX) {
-        printf("n:%d >= MAX:%d\n", n, MAX);
-        return 1;
-    }
-	for (int i =0;i<=n;i++)
-	    f[i] = -1;
-	val = fibN(n);
-	printf("n:%d fib:%d \n", n, val);
-	return 0;
-}
+int prepArray(char *str, int n) {
+	int *tmp;
+	int len = 0;
 	
-
-/* Find fibannoci series using tabulation method ,Dynammic programming method 2
-(Bottom Up): The tabulated program for a given problem builds a table in bottom up fashion and 
-returns the last entry from table. For example, for the same Fibonacci number, we first calculate 
-fib(0) then fib(1) then fib(2) then fib(3) and so on. So literally, we are building the solutions of subproblems bottom-up. */
-int findFibN(int n) {
-	int f[n+1];
-	f[0] = 0;
-	f[1] =1;
-	for (int i =2;i<=n;i++)
-	    f[i] = f[i-1] + f[i-2];
-	return f[n+1];
+	printf("n=%d, str=%s \n", n, str);
+	tmp = prepArrayHelper(str, &len);
+	for (int i = 0; i < len; i++)
+		printf("i=%d, element=%d \n",i, tmp[i]);
+        
+	free(tmp);
+	return 0;
 }
 
 /* Target of partitions is, given an array and an element x of array as pivot, 
@@ -134,57 +117,13 @@ void selectionsort(int a[], int size) {
 	}
 }
 
-/* convert string to array */
-int *prepArrayHelper(char *str, int *len) {
-	/* Caller will free memory */
-	int *A = malloc(sizeof(int) * MAX_ELEMENTS);
-	char *p = str;
-	int size = 0, n = 0;
-	char tmp[200000];
-
-	if (A == NULL) {
-		*len = 0;
-		return NULL;
+/* Find maximux in an array*/
+int findMaxinArray(int *arr, int len) {
+	int max_no = arr[0], i;
+	for (i=1; i < len ;i++) {
+		max_no = max(max_no, arr[i]);
 	}
-
-	while ((*p != '\0') && (n < MAX_ELEMENTS)) {
-		if (*p == ',') {
-			A[n] = myAtoi(tmp);
-			log ("n=%d A[n]=%d tmp=%s ", n, A[n], tmp);
-			n++;
-			memset(tmp, 0, size);
-			size = 0;
-
-		} else {
-			log ("size=%d *p=%c ", size, *p);
-		        tmp[size++] = *p;
-		}
-		p++;
-		/* Fill last element */
-		if (*p == '\0') 
-			A[n++] = myAtoi(tmp);
-	}
-
-
-	if (n == MAX_ELEMENTS) {
-		*len = 0;
-	} else {
-		*len = n;
-	}
-
-	return A;
-}
-int prepArray(char *str, int n) {
-	int *tmp;
-	int len = 0;
-	
-	printf("n=%d, str=%s \n", n, str);
-	tmp = prepArrayHelper(str, &len);
-	for (int i = 0; i < len; i++)
-		printf("i=%d, element=%d \n",i, tmp[i]);
-        
-	free(tmp);
-	return 0;
+	return (max_no);
 }
 
 /**  Find minimum sliding window size (INT_QUEST)
@@ -192,7 +131,7 @@ int prepArray(char *str, int n) {
  * Windows ===> { 1, 0, -1 } = 0 { 0, -1, 2} = 1 { -1, 2, 1} = 2 { 2, 1, 0} = 3 {1, 0, -2} = -1
  * m >= swSize*2
  */
-int findMinSlideSizeHelper(int arr[], int m, int swSize) {
+int findMinSlideSize(int arr[], int m, int swSize) {
       int min_size=INT_MAX;
       int curr_size = 0, i;
       for (i = 0; i < swSize;i++) 
@@ -206,18 +145,6 @@ int findMinSlideSizeHelper(int arr[], int m, int swSize) {
      
      return (min_size);
 }
-int findMinSlideSize(char *str, int n) {
-	int *a, m = 0;
-
-	a = prepArrayHelper(str, &m);
-	if (m)
-		printf("Minimum slide size is %d\n",findMinSlideSizeHelper(a, m, n));
-	else
-		log_err("Unable to execute m=%d",m);
-
-	free(a);
-	return 0;
-}
 
 /* Find number of slots remaining in a theatre row, you can't place no 
  * two people next to each other
@@ -226,7 +153,7 @@ int findMinSlideSize(char *str, int n) {
    Eg: 1010101000 -> 1010101010 ====> 1 person
    Eg: 0001010001 -> 0101010101 ====> 2 person
 */
-int findSlotsHelper(int a[] ,int size) {
+int findSlots(int a[] ,int size) {
 	int slot = 0;
 	int i=1;
 	while (i < size) {
@@ -242,24 +169,12 @@ int findSlotsHelper(int a[] ,int size) {
 	}
 	return slot;
 }
-int findSlots(char *str) {
-	int *a, m =0;
-
-	a = prepArrayHelper(str, &m);
-	if (m)
-		printf("Number of people to fill %d\n",findSlotsHelper(a, m));
-	else
-		log_err("Unable to execute m=%d",m);
-
-	free(a);
-	return 0;
-}
 
 /** Find duplicates in a array using bitmask INT_QUEST
  *Use bitmask where each bit represents number 
  *TBD:Optimize this to decrease size of bitmask
  **/
-void printDuplicatesHelper(int *arr, int len) {
+int printDuplicates(int *arr, int len) {
 	int i;
 	int max = findMaxinArray(arr, len);
 	int alloc = ((max/8)*sizeof(char)) + 1;
@@ -273,46 +188,18 @@ void printDuplicatesHelper(int *arr, int len) {
 		    *(bitmask) |= (1<<arr[i]);
 	}
 	free(bitmask);
-}
-int printDuplicates(char *str) {
-	int *a;
-	int m =0;
-
-	a = prepArrayHelper(str, &m);
-	if (m)
-		printDuplicatesHelper(a, m);
-	else
-		log_err("Unable to execute m=%d",m);
-
-	free(a);
 	return 0;
 }
-
-/* Print val without using print and using put */
-void printwithputHelper(int val) {
-	int rem;
-	if (val) {
-		rem = val %10;
-		printwithputHelper(val/10);
-		putc(rem + '0', stdout);
-	} 
-}
-int printwithput(char *str) {
-
-	printwithputHelper(myAtoi(str));
-	printf("\n");
-	return 0;
-}
-
-
-
 
 /* Wrappers for testType -> function */
-typedef int (*fptr1) (char *str);
-typedef int (*fptr2) (char *str, int len);
+typedef int (*fptr1) (int *Array, int len);
+typedef int (*fptr2) (int *Array, int len, int m);
 typedef struct testToRun {
+	/* Type of test*/
 	char *testType;
+	/* Number of parameters */
 	int params;
+	/* Function type ,0->fptr1&fptr2 1->fptr3*/
 	fptr1 func1;
 	fptr2 func2;
 	char *descr;
@@ -321,9 +208,9 @@ typedef struct testToRun {
 /* testRun tests[] will be used for invoking corresponding tests */
 static testRun tests[] = {{"duplicates", 1, printDuplicates, NULL, "Print Duplicates in A[]"},
 	           {"minSlide", 2, NULL, findMinSlideSize, "find minimum slide in A[] with slide size n"},
-		   {"putPrint", 1, printwithput, NULL, "Print n using put"},
 		   {"findSlot", 1, findSlots, NULL, "Movie theatre slot problem"},
-		   {"prepArray", 2, NULL, prepArray, "convert string to Array"}
+		   //{"prepArray", 2,  NULL, prepArray, "convert string to Array"},
+		   {"findMax", 1, findMaxinArray, NULL, "Find Maximum in an Array"}
 		   };
 
 /* Usage function */
@@ -354,12 +241,23 @@ void start_arraytest(int argc, char *argv[]) {
 			if ((argc - ptr->params - 3) != 0)
 			    break;
 			not_found = false;
-			if (ptr->params == 1)
-				(*ptr->func1)(argv[3]);
-			else
-				(*ptr->func2)(argv[3], myAtoi(argv[4]));
-		}
+			int *arr;
+			int m =0;
 
+			/* Convert string to Array */
+			arr = prepArrayHelper(argv[3], &m);
+			if (m) {
+				int result;
+				if (ptr->params == 1)
+					result = (*ptr->func1)(arr, m);
+				else
+					result = (*ptr->func2)(arr, m, myAtoi(argv[4]));
+				printf("%s() str:%s result:%d \n", ptr->testType, argv[3], result);
+			} else
+				log_err("Unable to execute m=%d",m);
+
+			free(arr);
+		}
 	}
 
 	if (not_found) {

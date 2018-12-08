@@ -63,6 +63,8 @@ func_def(bittests)
 func_def(stringtest)
 /* Arary tests*/
 func_def(arraytest)
+/* Arary tests*/
+func_def(variabletest)
 /* C basic tests */
 func_def(cbatests)
 /* single linked list */
