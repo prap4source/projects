@@ -23,17 +23,24 @@
 #endif
 #define log_err(fmt,...) printf("%s:%d Error::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
 #define log_info(fmt,...) printf("%s:%d INFO::::"fmt"\n",__func__,__LINE__,## __VA_ARGS__)
+
+/* function defintion of start_* */
 #define func_def(type) void start_##type(int argc, char *argv[]);
+
+#define swap(a, b) do { a = b + a ; b = a - b ; a = a - b ; } while (0) 
 #define MAX_HASH 10
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256
 #define ROW_MAX 20
 #define COL_MAX 20
+#define SUCCESS 0
+#define MAX_ASCII 256
+
+typedef unsigned long int  ulong;
+
 /* Common functions */
 int myatoi(char *str);
 
-#define SUCCESS 0
-typedef unsigned long int  ulong;
 /* Socket API's */
 func_def(server);
 func_def(client);
@@ -62,4 +69,3 @@ func_def(llist);
 /* Thread & synchronization  tests */
 func_def(thrtests);
 
-#define swap(a, b) do { a = b + a ; b = a - b ; a = a - b ; } while (0) 
