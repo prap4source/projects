@@ -27,6 +27,8 @@
 #define MAX_HASH 10
 #define MAX_QUEUE 5
 #define MAX_SOCK_MSG 256
+/* Common functions */
+int myatoi(char *str);
 
 #define SUCCESS 0
 typedef unsigned long int  ulong;
@@ -45,19 +47,12 @@ void setHash(char *key, char *value);
 func_def(md5);
 char *calc_md5(char *fileName);
 char *check_hash_for_md5(char *key);
-/* tests to run */
-char *multiplyStrings(char *n1, char *n2);
-void removeDups(char *n1);
-char *addStrings(char *n1, char *n2);
-char findDifferene(char *s, char *t);
-int compareVersion(char *v1, char *v2);
-int myAtoi(char *str);
-char *toLowerCase(char *str);
-void printDuplicates(int *arr, int len);
-int findMinSlideSize(int arr[], int m, int swSize);
-int findSlots(int arr[], int size);
 /* bit tests*/
 func_def(bittests)
+/* String tests*/
+func_def(stringtest)
+/* Arary tests*/
+func_def(arraytest)
 /* C basic tests */
 func_def(cbatests)
 /* single linked list */

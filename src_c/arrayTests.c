@@ -195,3 +195,37 @@ void selectionsort(int a[], int size) {
 		swap(a[i], a[min_idx]);
 	}
 }
+
+void printwithput(int val) {
+	int rem;
+	if (val) {
+		rem = val %10;
+		printwithput(val/10);
+		putc(rem + '0', stdout);
+	} 
+}
+
+void start_arraytest(int argc, char *argv[]) {
+	log ("num of arguments %d",argc);
+	
+	if (argc <= 3) {
+		log_err("Usage: <arraytests> <arg>");
+		return ;
+	}
+	
+	if (strcmp(argv[2], "array") == 0) {
+			int a[] = {1, 0, -1, 2, 1, 3, -2, -3, 0};
+			int m = sizeof(a)/sizeof(a[0]);
+			printDuplicates(a, m);
+			printf("findMinSlideSize(%d) \n", findMinSlideSize(a, m, 3 ));
+	} else if (strcmp(argv[2], "putc") == 0) {
+		printf("print element %s in putc \n",argv[3]);
+		printwithput(myAtoi(argv[3])); 
+	} else if (strcmp(argv[2], "theatre") == 0) {
+		int a[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
+		int m = sizeof(a)/sizeof(a[0]);
+		printf("Number of people to fill %d\n",findSlots(a, m));
+	} else {
+		log_err("Usage: <arraytests> <args>");
+	}
+}
