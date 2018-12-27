@@ -13,6 +13,43 @@ class SingleTree {
         Treep root;
         SingleTree() { root = NULL; }
 };
+
+/* Find Least common Ancestor of two nodes with n1 and n2 */
+Treep findLCA(Treep root, int n1, int n2) {
+    /* Base condition */     
+    if (root == NULL) return NULL;
+
+    if (root->val == n1 || root->val == n2)
+	return root;
+    /* Look for keys in left and right */
+    Treep left = findLCA(root->left, n1, n2);
+    Treep right = findLCA(root->right, n1, n2);
+
+    /* if both call return sucess key is present in one subtree */
+    if (left && right) 
+	return root;
+    else
+	return (left != NULL) ? left : right;
+}
+
+/* Find LCA in Binary Search tree */
+Treep findLCABST(Treep root, int n1, int n2) {
+    /* Base condition */
+    if (root == NULL) 
+	return NULL;
+    
+    /* if both n1 and n2 are smaller than root , then LCA will be in left */
+    if (root->val > n1 && root->val > n2) 
+	    return findLCABST(root->left, n1, n2);
+    
+    /* if n1 and n2 are greater than root key */
+    if (root->val < n1 && root->val < n2)
+	   return findLCABST(root->right, n1, n2);
+    
+    return root;
+}
+
+
 /* count nodes in complete balanaced tree */
 int countNodes(TreeNode* root) {
         int lh =0 ,rh =0;
@@ -41,7 +78,7 @@ int isValidBSTUtil(TreeNode *node, int min, int max) {
 	if (node->val <= min || node->val >=max)
 		return 1;
 	/* Left nodes should be less than node->val and right nodes should be greater than node->val */
-	return (isValidBSTUtil(node->left, min, node->val) && isValidBST(node->right,node->val,max));
+	return (isValidBSTUtil(node->left, min, node->val) && isValidBSTUtil(node->right,node->val,max));
 }
 bool isValidBST(TreeNode* root) {
 	int min = INT_MIN, max = INT_MAX;
