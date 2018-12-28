@@ -15,6 +15,9 @@
 #define BITS_PER_INT 32
 #define BIT_MASK_L(nr) (1UL << (nr % BITS_PER_LONG)) 
 #define BIT_WORD_L(nr) (nr / BITS_PER_LONG)
+/* Set Prepare a bit mask to set bits b/w two bits High and low */
+#define bit_mask_h_l(h, l) (((1<< (h-l+1)) -1) << l)
+
 static inline int misc_bits(int num, int position) {
     int v;
     num = num | (1 << position);/* Program to set a particular bit in an integer */
