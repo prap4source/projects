@@ -24,3 +24,24 @@ void f1() {
 	f2(&a);
 }
 
+/* Following program expects to return time and signum, 
+ * but due to error is not printing, fix it  */
+#define signum(x) ((x > 0) ? (x >0) : (-1)) 
+int signum_main()
+{
+    const int end = 3;
+    const int start = -2;
+    int idx = start;
+ 
+    while (idx != end)
+    {
+	#ifdef  ORGINAL_ERROR
+		printf("%+d => %+d\n", idx, signum(idx++));
+	#else /* -Added this to fix it .*/
+		idx++; 
+		printf("%+d => %+d\n", idx, signum(idx));
+	#endif
+    }
+ 
+    return 0;
+}
